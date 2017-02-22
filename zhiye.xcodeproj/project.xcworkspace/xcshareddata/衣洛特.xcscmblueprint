@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "C460EED60415B43AAFAADF8F2D2916CCC2648314",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "C460EED60415B43AAFAADF8F2D2916CCC2648314" : 0,
+    "B2EB142BA84A88F5F85E68A17D24F2A286E2AFEF" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "4D189652-3401-4133-8462-976A79AC9BAE",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "C460EED60415B43AAFAADF8F2D2916CCC2648314" : "yiroote\/",
+    "B2EB142BA84A88F5F85E68A17D24F2A286E2AFEF" : "SwiftInAction-008-016\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "衣洛特",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "衣洛特.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:GanzhouYI\/Edit_Image.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "B2EB142BA84A88F5F85E68A17D24F2A286E2AFEF"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:GanzhouYI\/yiroote.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C460EED60415B43AAFAADF8F2D2916CCC2648314"
+    }
+  ]
+}
