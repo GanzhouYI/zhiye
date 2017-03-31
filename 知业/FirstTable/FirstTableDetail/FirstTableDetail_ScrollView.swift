@@ -21,7 +21,7 @@ class FirstTableDetail_ScorllView: UIView,UIScrollViewDelegate {
         super.init(frame: frame)
         
         
-        self.scrollBG.backgroundColor=UIColor.whiteColor()
+        self.scrollBG.backgroundColor=UIColor(red: 135/255, green: 206/255, blue: 255/255, alpha: 0.5)
         
         self.showONe = UIImageView(image: UIImage(named: FirstTableImageUrl))
         self.showONe.frame.size = CGSize(width: self.frame.width,height: {

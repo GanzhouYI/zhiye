@@ -4,8 +4,9 @@ class PlanTableDataViewCell:UITableViewCell,UITextViewDelegate
 {
     let biaoqian = "fanbiaoqian1"
     let alarmImage = "alarm"
+    var planTableTid:Int!
     var planTableTTid:Int!
-    var planTableTTidRow:Int!
+    //var planTableTTidRow:Int!
     var NOCell:Int!
     var NOLabel:UILabel!
     
@@ -25,14 +26,15 @@ class PlanTableDataViewCell:UITableViewCell,UITextViewDelegate
     
     var msgItem:PlanTableCellDataMessageItem!//总体信息对象
     
-    init(frame:CGRect,planTableTTid:Int,planTableTTidRow:Int,NOCell:Int,data:PlanTableCellDataMessageItem, reuseIdentifier cellId:String)
+    init(frame:CGRect,planTableTid:Int,planTableTTid:Int,NOCell:Int,data:PlanTableCellDataMessageItem, reuseIdentifier cellId:String)
     {
         super.init(style: UITableViewCellStyle.Default, reuseIdentifier:cellId)
         self.alpha = 0
         self.frame = frame
         self.backgroundColor = NOCell%2==0 ? UIColor(red: 240/255, green: 248/255, blue: 255/255, alpha: 0.5) : UIColor(red: 135/255, green: 206/255, blue: 255/255, alpha: 0.5)
+        self.planTableTid = planTableTid
         self.planTableTTid = planTableTTid
-        self.planTableTTidRow = planTableTTidRow
+       // self.planTableTTidRow = planTableTTidRow
         self.NOCell = NOCell
         self.msgItem = PlanTableCellDataMessageItem()
         self.msgItem = data
@@ -43,45 +45,57 @@ class PlanTableDataViewCell:UITableViewCell,UITextViewDelegate
         
         leftAlarmIcon_button = UIButton(frame: CGRectMake(30,5,30,30))
         leftAlarmIcon_button.setBackgroundImage(UIImage(named: alarmImage), forState: UIControlState.Normal)
-        leftAlarmIcon_button.addTarget(self, action: "FuncSetAlarm:", forControlEvents: UIControlEvents.TouchUpInside)
+        leftAlarmIcon_button.addTarget(self, action: "FuncLeftSetAlarm", forControlEvents: UIControlEvents.TouchUpInside)
         
         leftAlarmData_button = UIButton(frame: CGRectMake(65,0,self.frame.width/2-85,30))
-        leftAlarmData_button.tag = 1000
-        leftAlarmData_button.backgroundColor = UIColor.blackColor()
+        //leftAlarmData_button.tag = 1000
+        leftAlarmData_button.backgroundColor = UIColor.clearColor()
         leftAlarmData_button.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
         leftAlarmData_button.titleLabel?.font = UIFont(name: "Arial", size: 13)
-        leftAlarmData_button.addTarget(self, action: "FuncSetAlarm:", forControlEvents: UIControlEvents.TouchUpInside)
+        leftAlarmData_button.addTarget(self, action: "FuncLeftSetAlarm", forControlEvents: UIControlEvents.TouchUpInside)
         
         leftAlarmDataFrequent_button = UIButton(frame: CGRectMake(65,12,self.frame.width/2-85,30))
-        leftAlarmDataFrequent_button.tag = 1001
+        //leftAlarmDataFrequent_button.tag = 1001
         leftAlarmDataFrequent_button.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
         leftAlarmDataFrequent_button.titleLabel?.font = UIFont(name: "Arial", size: 13)
-        leftAlarmDataFrequent_button.addTarget(self, action: "FuncSetAlarm:", forControlEvents: UIControlEvents.TouchUpInside)
+        leftAlarmDataFrequent_button.addTarget(self, action: "FuncLeftSetAlarm", forControlEvents: UIControlEvents.TouchUpInside)
         
         rightAlarmIcon_button = UIButton(frame: CGRectMake(15+self.frame.width/2,5,30,30))
         rightAlarmIcon_button.setBackgroundImage(UIImage(named: alarmImage), forState: UIControlState.Normal)
-        rightAlarmIcon_button.addTarget(self, action: "FuncSetAlarm:", forControlEvents: UIControlEvents.TouchUpInside)
+        rightAlarmIcon_button.addTarget(self, action: "FuncRightSetAlarm", forControlEvents: UIControlEvents.TouchUpInside)
         
         rightAlarmData_button = UIButton(frame: CGRectMake(15+self.frame.width/2+35,0,self.frame.width/2-85,30))
         rightAlarmData_button.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
-        rightAlarmData_button.addTarget(self, action: "FuncSetAlarm:", forControlEvents: UIControlEvents.TouchUpInside)
+        rightAlarmData_button.addTarget(self, action: "FuncRightSetAlarm", forControlEvents: UIControlEvents.TouchUpInside)
         rightAlarmData_button.titleLabel?.font = UIFont(name: "Arial", size: 13)
         
         rightAlarmDataFrequent_button = UIButton(frame: CGRectMake(15+self.frame.width/2+35,12,self.frame.width/2-85,30))
         rightAlarmDataFrequent_button.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
-        rightAlarmDataFrequent_button.addTarget(self, action: "FuncSetAlarm:", forControlEvents: UIControlEvents.TouchUpInside)
+        rightAlarmDataFrequent_button.addTarget(self, action: "FuncRightSetAlarm", forControlEvents: UIControlEvents.TouchUpInside)
         rightAlarmDataFrequent_button.titleLabel?.font = UIFont(name: "Arial", size: 13)
         
         left_data = UITextView(frame: CGRectMake(30,35,self.frame.width/2-50,40))
         left_data.delegate = self
         left_data.tag = 2000
+        left_data.alpha = 0.5
+        left_data.layer.borderColor = UIColor.whiteColor().CGColor
+        left_data.layer.borderWidth = 2
+        left_data.layer.cornerRadius = 10
+        left_data.backgroundColor = UIColor.clearColor()
+        left_data.font = UIFont(name: "Arial", size: 20)
         
         right_data = UITextView(frame: CGRectMake(15+self.frame.width/2,35,self.frame.width/2-50,40))
         right_data.delegate = self
         right_data.tag = 2001
+        right_data.alpha = 0.5
+        right_data.layer.borderColor = UIColor.whiteColor().CGColor
+        right_data.layer.borderWidth = 2
+        right_data.layer.cornerRadius = 10
+        right_data.backgroundColor = UIColor.clearColor()
+        right_data.font = UIFont(name: "Arial", size: 20)
         
-        left_data.text = msgItem.left_data!
-        right_data.text = msgItem.right_data!
+        left_data.text = msgItem.left_data
+        right_data.text = msgItem.right_data
 
         if(msgItem.HasLeftAlarm())
         {
@@ -129,11 +143,45 @@ class PlanTableDataViewCell:UITableViewCell,UITextViewDelegate
     {
         if(textView.tag == 2000)
         {
-            self.msgItem.SetData(true,data: textView.text!)
+            if(self.msgItem.left_data == textView.text)
+            {
+                //未修改不做处理
+            }
+            else
+            {
+                self.msgItem.SetData(true,data: textView.text!)
+                self.msgItem.SetRow_type(true)
+                //tid,ttid,ttid_row.row_type
+                var dynamic:[String] = []
+                dynamic.append(String(self.planTableTid))
+                dynamic.append(String(self.planTableTTid))
+                dynamic.append(String(self.NOCell))
+                dynamic.append(String(self.msgItem.row_type))
+                dynamic.append(left_data.text)
+                dynamic.append(right_data.text)
+                MySQL.shareMySQL().setLocalPlanCellData(dynamic)
+            }
         }
         else if(textView.tag == 2001)
         {
-            self.msgItem.SetData(false,data: textView.text!)
+            if(self.msgItem.right_data == textView.text)
+            {
+                //未修改不做处理
+            }
+            else
+            {
+                self.msgItem.SetData(false,data: textView.text!)
+                self.msgItem.SetRow_type(true)
+                //tid,ttid,ttid_row
+                var dynamic:[String] = []
+                dynamic.append(String(self.planTableTid))
+                dynamic.append(String(self.planTableTTid))
+                dynamic.append(String(self.NOCell))
+                dynamic.append(String(self.msgItem.row_type))
+                dynamic.append(left_data.text)
+                dynamic.append(right_data.text)
+                MySQL.shareMySQL().setLocalPlanCellData(dynamic)
+            }
         }
     }
     
@@ -147,16 +195,14 @@ class PlanTableDataViewCell:UITableViewCell,UITextViewDelegate
         sender.cancelsTouchesInView = false
     }
     
-    func FuncSetAlarm(AlarmButton:UIButton)
+    func FuncLeftSetAlarm()
     {
-        if(AlarmButton.tag == 1000 || AlarmButton.tag == 1001)
-        {
-            self.setAlarmDelegate?.ShowSetAlarm!(self,IsLeft:true,planTableTTid:planTableTTid,NOCell:NOCell)
-        }
-        else
-        {
-            self.setAlarmDelegate?.ShowSetAlarm!(self,IsLeft:false,planTableTTid:planTableTTid,NOCell:NOCell)
-        }
+        self.setAlarmDelegate?.ShowSetAlarm!(self,IsLeft:true,planTableTTid:planTableTTid,NOCell:NOCell)
+    }
+    
+    func FuncRightSetAlarm()
+    {
+        self.setAlarmDelegate?.ShowSetAlarm!(self,IsLeft:false,planTableTTid:planTableTTid,NOCell:NOCell)
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -44,7 +44,7 @@ class LoginModel:NSObject {
                 switch response.result
                 {
                 case .Success:
-                    print("网络连接正常")
+                    print("login  网络连接正常")
                     print(response.result.value!)
                     let str = (response.result.value!)as?String
                     

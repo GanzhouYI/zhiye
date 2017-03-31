@@ -64,9 +64,9 @@ First_ScrollView_Protocol{
     //上拉刷新  设置不转
     private func setUpFreshEnd() {
         //上拉刷新
-        loadMoreView!.backgroundColor = UIColor.orangeColor()
+        loadMoreView!.backgroundColor = UIColor(red: 135/255, green: 206/255, blue: 255/255, alpha: 1)
         var tip = UITextField(frame: CGRectMake(50,20,loadMoreView!.frame.width-100,loadMoreView!.frame.height-40))
-        tip.backgroundColor = UIColor.blueColor()
+        tip.backgroundColor = UIColor(red: 135/255, green: 206/255, blue: 255/255, alpha: 1)
         tip.text = "已是最新动态"
         
         self.loadMoreView!.addSubview(tip)

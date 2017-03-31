@@ -173,7 +173,7 @@ class MainViewController:UIViewController,UIScrollViewDelegate,First_Table_Deleg
         
         tail_seg1 = UIButton(frame: CGRectMake(30*宽比例,self.view.frame.height-20-20*高比例,30*宽比例,30*高比例))
         tail_seg1.setBackgroundImage(tail_image_seg1, forState: UIControlState.Normal)
-        tail_seg1.setTitle("tail_seg1", forState: UIControlState.Normal)
+        tail_seg1.setTitle("search", forState: UIControlState.Normal)
         tail_seg1.setTitleColor(UIColor.clearColor(), forState: UIControlState.Normal)
         tail_seg1.addTarget(self, action: "tail_segClick:", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(tail_seg1)

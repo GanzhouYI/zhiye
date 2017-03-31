@@ -32,7 +32,7 @@ class RegisterModel:NSObject {
                 switch response.result
                 {
                 case .Success:
-                    print("网络连接正常")
+                    print("register 网络连接正常")
                     print(response.result.value!)
                     
                     if(str == "昵称已存在")
@@ -78,7 +78,7 @@ class RegisterModel:NSObject {
                 switch response.result
                 {
                 case .Success:
-                    print("网络连接正常")
+                    print("registerName  网络连接正常")
                     print(response.result.value!)
                     
                     if(str == "昵称已存在")

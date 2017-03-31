@@ -7,10 +7,11 @@ protocol AlarmPickerProtocol
 
 class AlarmPickerView: UIView,UIPickerViewDataSource,UIPickerViewDelegate{
     //  时钟是2列       日历是3列
-    //  true 是time 选择时钟    false 是date  选择日历
+    //  false 是time 选择时钟    true 是date  选择日历
     var IsSpecialTime:Bool!
-    var la_hour:UILabel!
-    var la_min:UILabel!
+    var la_hour:UILabel! //充当年
+    var la_min:UILabel!  // 充当月
+    var la_day:UILabel!  // 充当日
     var Picker:UIPickerView!
     var 透明:UIImageView!
     var la_selectImage:UILabel!
@@ -28,7 +29,7 @@ class AlarmPickerView: UIView,UIPickerViewDataSource,UIPickerViewDelegate{
         picker_3.removeAll()
         selectArray.removeAll()
         
-        //初始化地区为 省5市1 县未选
+        //初始化地区为
         for a in 0...23{
             if(a < 10)
             {
@@ -65,6 +66,59 @@ class AlarmPickerView: UIView,UIPickerViewDataSource,UIPickerViewDelegate{
         self.addSubview(la_min)
     }
     
+    func  SetAlarmDate(var year:Int,var month:Int,var day:Int)
+    {
+        picker_1.removeAll()
+        picker_2.removeAll()
+        picker_3.removeAll()
+        selectArray.removeAll()
+        
+        //初始
+        for a in 2017...2117{
+            picker_1.append(String(a))
+        }
+        for b in 1...12{
+            if(b < 10)
+            {
+                picker_2.append("0" + String(b))
+            }
+            else
+            {
+                picker_2.append(String(b))
+            }
+        }
+        for c in 1...31 {
+            if(c < 10)
+            {
+                picker_3.append("0" + String(c))
+            }
+            else
+            {
+                picker_3.append(String(c))
+            }
+        }
+        
+        selectArray.append(year)//   默认选择2017年
+        selectArray.append(month)//   默认选择1月
+        selectArray.append(day)//   默认选择1日
+        
+        Picker.selectRow(selectArray[0]-2017, inComponent: 0, animated: true)
+        Picker.selectRow(selectArray[1]-1, inComponent: 1, animated: true)
+        Picker.selectRow(selectArray[2]-1, inComponent: 2, animated: true)
+        
+        la_hour = UILabel(frame: CGRectMake(self.frame.width*2/6, self.frame.height/2-12.5, 25, 25))
+        la_hour.text = "年"
+        self.addSubview(la_hour)
+        
+        la_min = UILabel(frame: CGRectMake(self.frame.width*4/6, self.frame.height/2-12.5, 25, 25))
+        la_min.text = "月"
+        self.addSubview(la_min)
+        
+        la_day = UILabel(frame: CGRectMake(self.frame.width-25, self.frame.height/2-12.5, 25, 25))
+        la_day.text = "日"
+        self.addSubview(la_day)
+    }
+    
     convenience init(frame:CGRect,IsSpecialTime:Bool)
     {
         self.init(frame:frame)
@@ -73,6 +127,10 @@ class AlarmPickerView: UIView,UIPickerViewDataSource,UIPickerViewDelegate{
         if(IsSpecialTime == false)
         {
             SetAlarmTime(0,min: 0)
+        }
+        else
+        {
+            SetAlarmDate(2017,month: 1,day: 1)
         }
     }
     
@@ -112,7 +170,7 @@ class AlarmPickerView: UIView,UIPickerViewDataSource,UIPickerViewDelegate{
         {
             return self.picker_2.count
         }
-            return self.picker_3.count
+        return self.picker_3.count
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
@@ -132,11 +190,15 @@ class AlarmPickerView: UIView,UIPickerViewDataSource,UIPickerViewDelegate{
         var AlarmData:[String]!
         if(IsSpecialTime == false)
         {
-            AlarmData = [picker_1[selectArray[0]],picker_2[selectArray[1]]]
+            var hour:String = selectArray[0] > 9 ? String(selectArray[0]) : "0"+String(selectArray[0])
+            var min:String = selectArray[1] > 9 ? String(selectArray[1]) : "0"+String(selectArray[1])
+            AlarmData = [hour,min]
         }
         else
         {
-            AlarmData = [picker_1[selectArray[0]],picker_2[selectArray[1]],picker_3[selectArray[2]]]
+            var month:String = selectArray[1] > 9 ? String(selectArray[1]) : "0"+String(selectArray[1])
+            var day:String = selectArray[2] > 9 ? String(selectArray[2]) : "0"+String(selectArray[2])
+            AlarmData = [String(selectArray[0]),month,day]
         }
         delegate.AlarmData(AlarmData)
         self.removeFromSuperview()
@@ -157,25 +219,102 @@ class AlarmPickerView: UIView,UIPickerViewDataSource,UIPickerViewDelegate{
         }
         else if(IsSpecialTime == true)
         {
-            if (component == 0)
+            if component==0
             {
-                selectArray[0] = row
+                self.selectArray[0] = row+2017
+                self.selectArray[1] = 1
+                self.selectArray[2] = 1
+                picker_3.removeAll()
+                
+                for c in 1...31 {
+                    if(c < 10)
+                    {
+                        picker_3.append("0" + String(c))
+                    }
+                    else
+                    {
+                        picker_3.append(String(c))
+                    }
+                }
+                //下面的有先后顺序不然 刷新不出来
+                pickerView.selectedRowInComponent(1)
+                pickerView.reloadComponent(1)
+                pickerView.selectedRowInComponent(2)
+                pickerView.reloadComponent(2)
+                pickerView.selectRow(selectArray[1]-1, inComponent: 1, animated: true)
+                pickerView.selectRow(selectArray[2]-1, inComponent: 2, animated: true)
             }
-            else if(component == 1)
+            
+            if component==1
             {
-                selectArray[1] = row
+                self.selectArray[1] = row+1
+                self.selectArray[2] = 1
+                
+                picker_3.removeAll()
+                // 月份为31天的日期
+                if(self.selectArray[1] == 1 || self.selectArray[1] == 3 || self.selectArray[1] == 5 || self.selectArray[1] == 7 || self.selectArray[1] == 8 || self.selectArray[1] == 10 || self.selectArray[1] == 12)
+                {
+                    for c in 1...31 {
+                        if(c < 10)
+                        {
+                            picker_3.append("0" + String(c))
+                        }
+                        else
+                        {
+                            picker_3.append(String(c))
+                        }
+                    }
+                }
+                else if(self.selectArray[1]==2)
+                {
+                    if(selectArray[0]%400 == 0 || (selectArray[0]%4 == 0 && selectArray[0]%100 != 0))
+                    {
+                        for c in 1...29 {
+                            if(c < 10)
+                            {
+                                picker_3.append("0" + String(c))
+                            }
+                            else
+                            {
+                                picker_3.append(String(c))
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for c in 1...28 {
+                            if(c < 10)
+                            {
+                                picker_3.append("0" + String(c))
+                            }
+                            else
+                            {
+                                picker_3.append(String(c))
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    for c in 1...30 {
+                        if(c < 10)
+                        {
+                            picker_3.append("0" + String(c))
+                        }
+                        else
+                        {
+                            picker_3.append(String(c))
+                        }
+                    }
+                }
+                pickerView.selectRow(selectArray[2]-1, inComponent: 2, animated: true)
+                pickerView.reloadComponent(2)
             }
-            else if(component == 2)
+            
+            if component==2
             {
-                selectArray[2] = row
+                selectArray[2] = row + 1
             }
-        }
-            //下面的有先后顺序不然 刷新不出来
-            /*pickerView.selectedRowInComponent(1)
-            pickerView.reloadComponent(1)
-            pickerView.selectedRowInComponent(2)
-            pickerView.reloadComponent(2)
-            pickerView.selectRow(selectArray[1], inComponent: 1, animated: true)
-            pickerView.selectRow(selectArray[2], inComponent: 2, animated: true)*/
         }
     }
+}

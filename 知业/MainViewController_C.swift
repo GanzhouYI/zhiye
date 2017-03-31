@@ -143,7 +143,8 @@ extension  MainViewController{
             let nav = UINavigationController(rootViewController: shexiangController())
             self.presentViewController(nav, animated: true, completion: nil)
             break
-        case "搜索":
+            //搜索
+        case "search":
             
             break
         default:

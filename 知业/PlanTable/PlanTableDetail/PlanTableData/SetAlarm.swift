@@ -5,7 +5,15 @@ class SetAlarmView: UIView,AlarmPickerProtocol {
     var PlanTableCell:PlanTableDataViewCell!
     var blackBackGround = UIButton()
     var setupkuang = UIButton()
+    
+    var IsAlarmDate:Bool = false
+    //先保存date 再保存时间
+    var SpecialDateCell:String = ""
+    var SpecialDateMessage:String = ""
     var AlarmPickerTime:AlarmPickerView!
+    var AlarmSpecialDate:AlarmPickerView!
+    
+    var bt_choice:UIButton!
     var bt_submit:UIButton!
     var bt_closeAlarm:UIButton!
     var selectDayData:[Int]!
@@ -16,7 +24,7 @@ class SetAlarmView: UIView,AlarmPickerProtocol {
     
     var la_bg:UILabel!
     var la_frequent:UILabel!
-    var bt_once:UIButton!
+    //var bt_once:UIButton!
     var bt_monday:UIButton!
     var bt_tuesday:UIButton!
     var bt_wednesday:UIButton!
@@ -30,6 +38,12 @@ class SetAlarmView: UIView,AlarmPickerProtocol {
         self.PlanTableCell = PlanTableCell
         self.IsLeft = IsLeft
         
+        self.AlarmSpecialDate = AlarmPickerView(frame: CGRectMake(50, 100, self.frame.width-100, 150),IsSpecialTime:true)
+        self.AlarmSpecialDate.delegate = self
+        
+        self.AlarmPickerTime = AlarmPickerView(frame: CGRectMake(50, 100, self.frame.width-100, 150),IsSpecialTime:false)
+        self.AlarmPickerTime.delegate = self
+        
         UIView.animateWithDuration(1, // 动画时长
             delay:0 ,// 动画延迟z
             usingSpringWithDamping:1.0 ,// 类似弹簧振动效果 0~1
@@ -37,8 +51,7 @@ class SetAlarmView: UIView,AlarmPickerProtocol {
             options:UIViewAnimationOptions.CurveEaseIn, // 动画过渡效果
             animations: {()-> Void in
                 self.setupkuang.frame = CGRectMake(50, 70, self.frame.width-100, self.frame.height-160)
-                self.AlarmPickerTime = AlarmPickerView(frame: CGRectMake(50, 100, self.frame.width-100, 150),IsSpecialTime:false)
-                self.AlarmPickerTime.delegate = self
+                
                 self.InitAlarm()
                 self.addSubview(self.AlarmPickerTime)
             }, completion:{(Bool)-> Void in
@@ -115,17 +128,73 @@ class SetAlarmView: UIView,AlarmPickerProtocol {
         bt_saturday.addTarget(self, action: "SelectDay:", forControlEvents: UIControlEvents.TouchUpInside)
         self.addSubview(bt_saturday)
         
-        bt_submit = UIButton(frame: CGRectMake(50, 350, self.frame.width-100, 40))
+        bt_choice = UIButton(frame: CGRectMake(50, 410, self.frame.width-100, 40))
+        bt_choice.backgroundColor = UIColor(red: 99/255, green: 184/255, blue: 255/255, alpha: 1)
+        bt_choice.addTarget(self, action: "Fun_Choice", forControlEvents: UIControlEvents.TouchUpInside)
+        bt_choice.setTitle("选择指定时间", forState: UIControlState.Normal)
+        self.addSubview(bt_choice)
+        
+        bt_submit = UIButton(frame: CGRectMake(50, 470, self.frame.width-100, 40))
         bt_submit.backgroundColor = UIColor(red: 99/255, green: 184/255, blue: 255/255, alpha: 1)
         bt_submit.addTarget(self, action: "Fun_Submit", forControlEvents: UIControlEvents.TouchUpInside)
         bt_submit.setTitle("确定", forState: UIControlState.Normal)
         self.addSubview(bt_submit)
         
-        bt_closeAlarm = UIButton(frame: CGRectMake(50, 410, self.frame.width-100, 40))
+        bt_closeAlarm = UIButton(frame: CGRectMake(50, 530, self.frame.width-100, 40))
         bt_closeAlarm.backgroundColor = UIColor(red: 99/255, green: 184/255, blue: 255/255, alpha: 1)
         bt_closeAlarm.addTarget(self, action: "Fun_CloseAlarm", forControlEvents: UIControlEvents.TouchUpInside)
         bt_closeAlarm.setTitle("关闭闹钟", forState: UIControlState.Normal)
         self.addSubview(bt_closeAlarm)
+    }
+    
+    func InitAlarmCGRectMake() {
+        //如果是指定时间
+        if(IsAlarmDate == true)
+        {
+            UIView.animateWithDuration(1, // 动画时长
+                delay:0 ,// 动画延迟z
+                usingSpringWithDamping:1.0 ,// 类似弹簧振动效果 0~1
+                initialSpringVelocity:1.0 ,// 初始速度
+                options:UIViewAnimationOptions.CurveEaseIn, // 动画过渡效果
+                animations: {()-> Void in
+                    self.AlarmSpecialDate.frame = CGRectMake(50, 100, self.frame.width-100, 150)
+                    self.addSubview(self.AlarmSpecialDate)
+                    
+                    self.AlarmPickerTime.frame = CGRectMake(50, 270, self.frame.width-100, 150)
+                    self.addSubview(self.AlarmPickerTime)
+                    
+                    self.bt_choice.frame = CGRectMake(50, 450, self.frame.width-100, 40)
+                    self.bt_choice.setTitle("选择闹钟", forState: UIControlState.Normal)
+                    
+                    self.bt_submit.frame = CGRectMake(50, 510, self.frame.width-100, 40)
+                    self.bt_closeAlarm.frame = CGRectMake(50, 570, self.frame.width-100, 40)
+
+                    self.HiddenSelectDay()
+                }, completion:{(Bool)-> Void in })
+        }
+        else
+        {
+            UIView.animateWithDuration(1, // 动画时长
+                delay:0 ,// 动画延迟z
+                usingSpringWithDamping:1.0 ,// 类似弹簧振动效果 0~1
+                initialSpringVelocity:1.0 ,// 初始速度
+                options:UIViewAnimationOptions.CurveEaseIn, // 动画过渡效果
+                animations: {()-> Void in
+                    self.AlarmSpecialDate.frame = CGRectMake(50, -150, self.frame.width-100, 150)
+                    self.AlarmSpecialDate.removeFromSuperview()
+                    
+                    self.AlarmPickerTime.frame = CGRectMake(50, 100, self.frame.width-100, 150)
+                    self.addSubview(self.AlarmPickerTime)
+                    
+                    self.bt_choice.frame = CGRectMake(50, 410, self.frame.width-100, 40)
+                    self.bt_choice.setTitle("选择指定日期", forState: UIControlState.Normal)
+                    
+                    self.bt_submit.frame = CGRectMake(50, 470, self.frame.width-100, 40)
+                    self.bt_closeAlarm.frame = CGRectMake(50, 530, self.frame.width-100, 40)
+                    
+                    self.ShowSelectDay()
+                }, completion:{(Bool)-> Void in })
+        }
     }
     
     func InitAlarm(){
@@ -136,10 +205,23 @@ class SetAlarmView: UIView,AlarmPickerProtocol {
                 IsOpen = true
                 if(PlanTableCell.msgItem.IsSpecialLeftTime())
                 {
+                    IsAlarmDate=true
+                    InitAlarmCGRectMake()
                     //指定时间
+                    var year:Int = PlanTableCell.msgItem.ReturnLeftAlarm(0) != "" ? Int(PlanTableCell.msgItem.ReturnLeftAlarm(0))! : 0
+                    var month:Int = PlanTableCell.msgItem.ReturnLeftAlarm(1) != "" ? Int(PlanTableCell.msgItem.ReturnLeftAlarm(1))! : 0
+                    var day:Int = PlanTableCell.msgItem.ReturnLeftAlarm(2) != "" ? Int(PlanTableCell.msgItem.ReturnLeftAlarm(2))! : 0
+                    
+                    var hour:Int = PlanTableCell.msgItem.ReturnLeftAlarm(3) != "" ? Int(PlanTableCell.msgItem.ReturnLeftAlarm(3))! : 0
+                    var min:Int = PlanTableCell.msgItem.ReturnLeftAlarm(4) != "" ? Int(PlanTableCell.msgItem.ReturnLeftAlarm(4))! : 0
+                    
+                    self.AlarmSpecialDate.SetAlarmDate(year, month: month, day: day)
+                    self.AlarmPickerTime.SetAlarmTime(hour, min: min)
                 }
                 else
                 {
+                    IsAlarmDate = false
+                    InitAlarmCGRectMake()
                     var hour:Int = PlanTableCell.msgItem.ReturnLeftAlarm(0) != "" ? Int(PlanTableCell.msgItem.ReturnLeftAlarm(0))! : 0
                     var min:Int = PlanTableCell.msgItem.ReturnLeftAlarm(1) != "" ? Int(PlanTableCell.msgItem.ReturnLeftAlarm(1))! : 0
                     
@@ -150,6 +232,8 @@ class SetAlarmView: UIView,AlarmPickerProtocol {
             else
             {
                 IsOpen = false
+                IsAlarmDate = false
+                InitAlarmCGRectMake()
                 self.AlarmPickerTime.SetAlarmTime(8, min: 0)
             }
         }
@@ -161,9 +245,24 @@ class SetAlarmView: UIView,AlarmPickerProtocol {
                 if(PlanTableCell.msgItem.IsSpecialRightTime())
                 {
                     //指定时间
+                    IsAlarmDate=true
+                    InitAlarmCGRectMake()
+                    
+                    var year:Int = PlanTableCell.msgItem.ReturnRightAlarm(0) != "" ? Int(PlanTableCell.msgItem.ReturnRightAlarm(0))! : 0
+                    var month:Int = PlanTableCell.msgItem.ReturnRightAlarm(1) != "" ? Int(PlanTableCell.msgItem.ReturnRightAlarm(1))! : 0
+                    var day:Int = PlanTableCell.msgItem.ReturnRightAlarm(2) != "" ? Int(PlanTableCell.msgItem.ReturnRightAlarm(2))! : 0
+                    
+                    var hour:Int = PlanTableCell.msgItem.ReturnRightAlarm(3) != "" ? Int(PlanTableCell.msgItem.ReturnRightAlarm(3))! : 0
+                    var min:Int = PlanTableCell.msgItem.ReturnRightAlarm(4) != "" ? Int(PlanTableCell.msgItem.ReturnRightAlarm(4))! : 0
+                    
+                    self.AlarmSpecialDate.SetAlarmDate(year, month: month, day: day)
+                    self.AlarmPickerTime.SetAlarmTime(hour, min: min)
+
                 }
                 else
                 {
+                    IsAlarmDate=false
+                    InitAlarmCGRectMake()
                     var hour:Int = PlanTableCell.msgItem.ReturnRightAlarm(0) != "" ? Int(PlanTableCell.msgItem.ReturnRightAlarm(0))! : 0
                     var min:Int = PlanTableCell.msgItem.ReturnRightAlarm(1) != "" ? Int(PlanTableCell.msgItem.ReturnRightAlarm(1))! : 0
                     
@@ -174,6 +273,8 @@ class SetAlarmView: UIView,AlarmPickerProtocol {
             else
             {
                 IsOpen = false
+                IsAlarmDate=false
+                InitAlarmCGRectMake()
                 self.AlarmPickerTime.SetAlarmTime(8, min: 0)
             }
         }
@@ -254,6 +355,32 @@ class SetAlarmView: UIView,AlarmPickerProtocol {
             selectDayData[6]=0
             bt_sunday.backgroundColor = UIColor.grayColor()
         }
+    }
+    
+    func HiddenSelectDay()  {
+        la_bg.removeFromSuperview()
+        la_frequent.removeFromSuperview()
+        //bt_once.removeFromSuperview()
+        bt_monday.removeFromSuperview()
+        bt_tuesday.removeFromSuperview()
+        bt_wednesday.removeFromSuperview()
+        bt_thursday.removeFromSuperview()
+        bt_friday.removeFromSuperview()
+        bt_saturday.removeFromSuperview()
+        bt_sunday.removeFromSuperview()
+    }
+    
+    func ShowSelectDay()  {
+        self.addSubview(la_bg)
+        self.addSubview(la_frequent)
+        ///self.addSubview(bt_once)
+        self.addSubview(bt_monday)
+        self.addSubview(bt_tuesday)
+        self.addSubview(bt_wednesday)
+        self.addSubview(bt_thursday)
+        self.addSubview(bt_friday)
+        self.addSubview(bt_saturday)
+        self.addSubview(bt_sunday)
     }
     
     func SelectDay(bt:UIButton)
@@ -377,8 +504,31 @@ class SetAlarmView: UIView,AlarmPickerProtocol {
     func Fun_Submit()
     {
         IsOpen = true
-        self.AlarmPickerTime.ReturnPickerViewValue()
+        if(IsAlarmDate == true)
+        {
+            self.AlarmSpecialDate.ReturnPickerViewValue()
+            self.AlarmPickerTime.ReturnPickerViewValue()
+        }
+        else
+        {
+            self.AlarmPickerTime.ReturnPickerViewValue()
+        }
         back()
+    }
+    
+    func Fun_Choice()
+    {
+        // 切换 为选择指定时间
+        if(IsAlarmDate==false)
+        {
+            IsAlarmDate=true
+            InitAlarmCGRectMake()
+        }
+        else
+        {
+            IsAlarmDate=false
+            InitAlarmCGRectMake()
+        }
     }
     
     func AlarmData(data: [String]) {
@@ -400,7 +550,8 @@ class SetAlarmView: UIView,AlarmPickerProtocol {
             return
         }
         
-        if(self.AlarmPickerTime.IsSpecialTime == false)
+        //如果不是指定时间
+        if(IsAlarmDate == false)
         {
             date = data[0] + ":" + data[1]
             for(var i:Int = 0; i < 7; i += 1)
@@ -416,10 +567,28 @@ class SetAlarmView: UIView,AlarmPickerProtocol {
                     if(i == 6){frequent += "日"}
                 }
             }
-            PlanTableDataMessage.sharePlanTableData().dataMessageItem[self.PlanTableCell.planTableTTidRow].PlanTableCellData[self.PlanTableCell.NOCell].SetAlarm(IsLeft, IsOpen: IsOpen, IsSpecialTime: self.AlarmPickerTime.IsSpecialTime, Data: data[0]+","+data[1]+","+frequent)
+            var MessageData = ""
+            if(frequent == "")
+            {
+                MessageData = data[0]+","+data[1]
+            }
+            else
+            {
+                MessageData = data[0]+","+data[1]+","+frequent
+            }
+            PlanTableDataMessage.sharePlanTableData().dataMessageItem.PlanTableCellData[self.PlanTableCell.NOCell].SetAlarm(IsLeft, IsOpen: IsOpen, IsSpecialTime: self.IsAlarmDate, Data: MessageData)
             
-            self.PlanTableCell.msgItem.SetAlarm(IsLeft, IsOpen: IsOpen, IsSpecialTime: self.AlarmPickerTime.IsSpecialTime, Data: data[0]+","+data[1]+","+frequent)
+            self.PlanTableCell.msgItem.SetAlarm(IsLeft, IsOpen: IsOpen, IsSpecialTime: self.IsAlarmDate, Data: MessageData)
         
+            var dynamic:[String] = []
+            dynamic.append(String(self.PlanTableCell.planTableTid))
+            dynamic.append(String(self.PlanTableCell.planTableTTid))
+            dynamic.append(String(self.PlanTableCell.NOCell))
+            dynamic.append(String(self.PlanTableCell.msgItem.row_type))
+            dynamic.append(self.PlanTableCell.msgItem.left_alarm)
+            dynamic.append(self.PlanTableCell.msgItem.right_alarm)
+            MySQL.shareMySQL().setLocalPlanCellAlarm(dynamic)
+            
             if(IsLeft == true)
             {
                 self.PlanTableCell.leftAlarmData_button.setTitle(date, forState: UIControlState.Normal)
@@ -444,10 +613,57 @@ class SetAlarmView: UIView,AlarmPickerProtocol {
                     self.PlanTableCell.rightAlarmDataFrequent_button.setTitle("", forState: UIControlState.Normal)
                 }
             }
-        }
-        else if(self.AlarmPickerTime.IsSpecialTime == true)
+        }//如果是指定时间
+        else if(self.IsAlarmDate == true)
         {
-            
+            //先保存date再保存 time
+            if(data.count == 3)
+            {
+                SpecialDateCell = ""
+                SpecialDateMessage = ""
+                //年月日
+                SpecialDateCell += data[0] + "-"
+                SpecialDateCell += data[1] + "-"
+                SpecialDateCell += data[2] + " "
+                
+                SpecialDateMessage += data[0] + ","
+                SpecialDateMessage += data[1] + ","
+                SpecialDateMessage += data[2] + ","
+            }
+            else
+            {
+                //时分
+                SpecialDateCell += data[0] + ":"
+                SpecialDateCell += data[1]
+                
+                SpecialDateMessage += data[0] + ","
+                SpecialDateMessage += data[1]
+                
+                PlanTableDataMessage.sharePlanTableData().dataMessageItem.PlanTableCellData[self.PlanTableCell.NOCell].SetAlarm(IsLeft, IsOpen: IsOpen, IsSpecialTime: self.IsAlarmDate, Data:SpecialDateMessage)
+                
+                self.PlanTableCell.msgItem.SetAlarm(IsLeft, IsOpen: IsOpen, IsSpecialTime: self.IsAlarmDate, Data: SpecialDateMessage)
+                
+                var dynamic:[String] = []
+                dynamic.append(String(self.PlanTableCell.planTableTid))
+                dynamic.append(String(self.PlanTableCell.planTableTTid))
+                dynamic.append(String(self.PlanTableCell.NOCell))
+                dynamic.append(String(self.PlanTableCell.msgItem.row_type))
+                dynamic.append(String(self.PlanTableCell.msgItem.left_alarm))
+                dynamic.append(String(self.PlanTableCell.msgItem.right_alarm))
+                MySQL.shareMySQL().setLocalPlanCellAlarm(dynamic)
+                
+                
+                if(IsLeft == true)
+                {
+                    self.PlanTableCell.leftAlarmData_button.setTitle(SpecialDateCell, forState: UIControlState.Normal)
+                    self.PlanTableCell.leftAlarmDataFrequent_button.setTitle("", forState: UIControlState.Normal)
+                }
+                else
+                {
+                    self.PlanTableCell.rightAlarmData_button.setTitle(SpecialDateCell, forState: UIControlState.Normal)
+                    self.PlanTableCell.rightAlarmDataFrequent_button.setTitle("", forState: UIControlState.Normal)
+                }
+            }
         }
     }
     

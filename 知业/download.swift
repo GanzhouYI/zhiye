@@ -38,7 +38,7 @@ class download
                 try! fileManager.createDirectoryAtURL(folder, withIntermediateDirectories: true,
                                                       attributes: nil)
             }
-            print("out")
+            print("downImage  out")
             return folder.URLByAppendingPathComponent(fileName+fileType)
         }
         

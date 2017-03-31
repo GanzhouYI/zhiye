@@ -3,10 +3,24 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "PlanTableDataView.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:PlanTableDataView.swift">
+         contextName = "FirstTableView.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:FirstTableView.swift">
          <PersistentStrings>
             <PersistentString
-               value = "PlanTableDataMessage.sharePlanTableData().ReturnCellDataItem(&quot;0&quot;, NOCell:0)">
+               value = "indexPath.row">
+            </PersistentString>
+            <PersistentString
+               value = "self.bubbleSection">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "PlanTableDataView.tableView(UITableView, numberOfRowsInSection : Int) -&gt; Int:PlanTableDataView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "PlanTableDataMessage.sharePlanTableData().dataMessageItem">
+            </PersistentString>
+            <PersistentString
+               value = "PlanTableDataMessage.sharePlanTableData().ReturnTableDataCount(String(1),planTableTTid: String(0))">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -19,18 +33,21 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "SetAlarmView.InitAlarm() -&gt; ():SetAlarm.swift">
-      </ContextState>
-      <ContextState
-         contextName = "FirstTableView.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:FirstTableView.swift">
+         contextName = "PlanTableDataMessage.ReturnTableDataCount(String, planTableTTid : String) -&gt; Int:PlanTableDataMessage.swift">
          <PersistentStrings>
             <PersistentString
-               value = "indexPath.row">
-            </PersistentString>
-            <PersistentString
-               value = "self.bubbleSection">
+               value = "dataMessageItem[0].tid == planTableTid">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "SetAlarmView.init(frame : CGRect, PlanTableCell : PlanTableDataViewCell, IsLeft : Bool) -&gt; SetAlarmView:SetAlarm.swift">
+      </ContextState>
+      <ContextState
+         contextName = "MySQL.ReturnPlanCellData(Int, ttid : Int, uid : Int) -&gt; [PlanTableCellDataMessageItem]:planSQL.swift">
+      </ContextState>
+      <ContextState
+         contextName = "SetAlarmView.Fun_CloseAlarm() -&gt; ():SetAlarm.swift">
       </ContextState>
       <ContextState
          contextName = "PlanTableCellDataMessageItem.SetAlarm(Bool, IsOpen : Bool, IsSpecialTime : Bool, Data : String) -&gt; ():PlanTableDataMessage.swift">
@@ -41,10 +58,66 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "SetAlarmView.AlarmData([String]) -&gt; ():SetAlarm.swift">
+         contextName = "AlarmPickerView.ReturnPickerViewValue() -&gt; ():AlarmPickerView.swift">
       </ContextState>
       <ContextState
-         contextName = "SetAlarmView.Fun_CloseAlarm() -&gt; ():SetAlarm.swift">
+         contextName = "PlanTableView.tableView(UITableView, didSelectRowAtIndexPath : NSIndexPath) -&gt; ():PlanTableView.swift">
+      </ContextState>
+      <ContextState
+         contextName = "SetAlarmView.AlarmData([String]) -&gt; ():SetAlarm.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "PlanTableDataMessage.sharePlanTableData().dataMessageItem[self.PlanTableCell.NOCell].PlanTableCellData[self.PlanTableCell.NOCell]">
+            </PersistentString>
+            <PersistentString
+               value = "self.PlanTableCell.NOCell">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "PlanTableDataViewCell.init(frame : CGRect, planTableTid : Int, planTableTTid : Int, NOCell : Int, data : PlanTableCellDataMessageItem, reuseIdentifier : String) -&gt; PlanTableDataViewCell:PlanTableDataViewCell.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "msgItem.HasRightAlarm()">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "PlanTableDataView.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:PlanTableDataView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "PlanTableDataMessage.sharePlanTableData().ReturnCellDataItem(&quot;0&quot;, NOCell:0)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MySQL.insertEmptyPlan(Int!) -&gt; ():planSQL.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "data[0][&quot;Max(tid)&quot;]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "PlanTableDataMessage.insertNewPlanCell(String, planTableTTid : String) -&gt; ():PlanTableDataMessage.swift">
+      </ContextState>
+      <ContextState
+         contextName = "MainViewController.Plan_Table_DidSelect(Int, bubbleSection : PlanTableMessageItem) -&gt; ():MainViewController_C.swift">
+      </ContextState>
+      <ContextState
+         contextName = "MySQL.insertPlanCell([String]) -&gt; ():planSQL.swift">
+      </ContextState>
+      <ContextState
+         contextName = "MySQL.insertPlanEmptyCell([String]) -&gt; ():planSQL.swift">
+      </ContextState>
+      <ContextState
+         contextName = "PlanTableDataMessage.InitData(Int, ttid : Int, uid : Int) -&gt; ():PlanTableDataMessage.swift">
+      </ContextState>
+      <ContextState
+         contextName = "downDynamic.(conNet(String, block : (dataInfo : String, data : [[String]]) -&gt; ()?) -&gt; ()).(closure #1):downDynamic.swift">
+      </ContextState>
+      <ContextState
+         contextName = "SetAlarmView.InitAlarm() -&gt; ():SetAlarm.swift">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

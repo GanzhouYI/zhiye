@@ -1,10 +1,3 @@
-//
-//  MyNet.swift
-//  衣洛特
-//
-//  Created by __________V|R__________ on 16/4/7.
-//  Copyright © 2016年 __________V|R__________. All rights reserved.
-//
 import Foundation
 import Alamofire
 
@@ -26,6 +19,7 @@ class downDynamic:NSObject {
     {
         let urlString:String = "http://www.loveinbc.com/zhiye/downDynamic.php"
         let parameters = ["dynamic_date": dynamic_date]
+        //let parameters = ["dynamic_date":""]
         print("输出更新动态请求的lastDate")
         print(parameters)
         
@@ -35,7 +29,7 @@ class downDynamic:NSObject {
                 switch response.result
                 {
                 case .Success:
-                    print("网络连接正常")
+                    print("downDynamic 网络连接正常")
                     print(response.result.value!)
                     let str = (response.result.value!)as?String
                     

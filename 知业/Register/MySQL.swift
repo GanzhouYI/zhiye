@@ -46,53 +46,28 @@ class MySQL
         }
         
         //如果表还不存在则创建表（其中uid为自增主键）
-        SQLiteDB.sharedInstance().execute("create table if not exists zhiye_User(uid integer primary key,username varchar(30),pwd varchar(50),email varchar(30),phone varchar(20),gender varchar(4),intro text,diqu varchar(40),logo varchar(50))")
+        SQLiteDB.sharedInstance().execute("create table if not exists zhiye_User(uid int primary key,username varchar(30),pwd varchar(50),email varchar(30),phone varchar(20),gender varchar(4),intro text,diqu varchar(40),logo varchar(50))")
         
-        let createStrDynamic = "create table if not exists zhiye_Dynamic(dynamic_id integer primary key,uid int,dynamic_image text,dynamic_text text,dynamic_num_people_watch int,dynamic_num_people_praise int,dynamic_date datetime,dynamic_title text,foreign key (uid) references zhiye_User(uid) on delete cascade)"
+        let createStrDynamic = "create table if not exists zhiye_Dynamic(dynamic_id int,uid int,dynamic_image text,dynamic_text text,dynamic_num_people_watch int,dynamic_num_people_praise int,dynamic_date datetime,dynamic_title text,primary key(dynamic_id,uid),foreign key (uid) references zhiye_User(uid) on delete cascade)"
         //如果表还不存在则创建表（其中uid为自增主键）
         SQLiteDB.sharedInstance().execute(createStrDynamic)
         
         //创建时间、最后修改时间、最近的一次闹钟时间（包括在 哪个子表，哪一行的闹钟）
-        let createStr_zhiyeTable = "create table if not exists zhiye_Table(tid integer primary key,uid int,name varchar(32),tip text,create_time datetime,last_time datetime,alarm_time datetime,Table_yanjin_Num integer,Table_pinglun_Num integer,ttid integer,ttid_row integer,ttidUpdated integer,foreign key (uid) references zhiye_User(uid) on delete cascade)"
+        //status只在本地有，远端没有该字段
+        //status (0、最新数据   1、需要更新   2、需要上传   3、已删除)
+        let createStr_zhiyeTable = "create table if not exists zhiye_Table(tid int,uid int,name varchar(32),tip text,status int,create_time datetime,last_time datetime,alarm_time text,Table_yanjin_Num int default 0,Table_pinglun_Num int default 0,ttid int,ttid_row int,primary key(tid,uid),foreign key (uid) references zhiye_User(uid) on delete cascade)"
         //如果表还不存在则创建表
         SQLiteDB.sharedInstance().execute(createStr_zhiyeTable)
         
-        let createStr_zhiyeTableData = "create table if not exists zhiye_TableData(tid integer primary key,ttid int,row_type integer,foreign key (tid) references zhiye_Table(tid) on delete cascade)"
+        
+        //primary key(uid,tid,ttid,ttid_row)
+        //row_type 二进制默认值  121
+        //left_connect 默认值-1为无跳转   right_connect同left_connect
+        let createStr_zhiyeTableData = "create table if not exists zhiye_TableData(uid int,tid int,ttid int,ttid_row int,row_type int default 121,left_data text,left_alarm text,left_connect int default -1,right_data text,right_alarm text,right_connect int default -1,primary key(uid,tid,ttid,ttid_row))"
         //如果表还不存在则创建表
         SQLiteDB.sharedInstance().execute(createStr_zhiyeTableData)
         
-        var str_left_data = "left_data_"
-        var str_left_alarm = "left_alarm_"
-        var str_left_connect = "left_connect_"
         
-        var str_right_data = "right_data_"
-        var str_right_alarm = "right_alarm_"
-        var str_right_connect = "right_connect_"
-        
-        for(var i = 1;i <= 100;i += i)
-        {
-            str_left_data += String(i)
-            str_left_alarm += String(i)
-            str_left_connect += String(i)
-            
-            str_right_data += String(i)
-            str_right_alarm += String(i)
-            str_right_connect += String(i)
-            
-            var sql = "alter table zhiye_TableData add "+str_left_data+"text"
-            SQLiteDB.sharedInstance().query(sql)
-            sql = "alter table zhiye_TableData add "+str_left_alarm+"text"
-            SQLiteDB.sharedInstance().query(sql)
-            sql = "alter table zhiye_TableData add "+str_left_connect+"text"
-            SQLiteDB.sharedInstance().query(sql)
-            
-            sql = "alter table zhiye_TableData add "+str_right_data+"text"
-            SQLiteDB.sharedInstance().query(sql)
-            sql = "alter table zhiye_TableData add "+str_right_alarm+"text"
-            SQLiteDB.sharedInstance().query(sql)
-            sql = "alter table zhiye_TableData add "+str_right_connect+"text"
-            SQLiteDB.sharedInstance().query(sql)
-        }
     }
     
 //从SQLite加载数据
@@ -132,6 +107,19 @@ class MySQL
     return user
 }
 
+    func searchUserInfo(uid:String = String(LoginModel.sharedLoginModel()?.MyUid!))->Dictionary<String,String>
+    {
+        let sqlString = "select * from zhiye_User where uid ='"+uid+"'"
+        var data = SQLiteDB.sharedInstance().query(sqlString)
+        var user:[String:String] = [uid:"-1"]
+        if data.count > 0 {
+            //获取最后一行数据显示
+            user = data[data.count - 1] as! [String:String]
+        }
+        print("searchUserInfo")
+        print(user)
+        return user
+    }
     
     func updateUser(username:String,user:[String:AnyObject]){
         print("updateUser")

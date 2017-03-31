@@ -13,6 +13,8 @@ class PlanTableDetailController: UIViewController,UITextFieldDelegate,UITextView
     var planName:UITextField!
     var planDescribe:UITextView!
     
+    var ReLoadTableView:()->Void = {}
+    
     var PlanTableDataViewController:PlanTableDataView!
     override func loadView() {
         super.loadView()
@@ -60,40 +62,6 @@ class PlanTableDetailController: UIViewController,UITextFieldDelegate,UITextView
         planDescribe.font = UIFont(name: "Arial", size: 20)
        //planDescribe.backgroundColor=UIColor.greenColor()
         
-        PlanTableDataMessage.sharePlanTableData().dataMessageItem.removeAll()
-        
-        for tidID in 0..<10
-        {
-            var tid:String
-            var ttid:String
-            var title:String
-            var tip:String
-            
-            var CellDataItem:PlanTableCellDataMessageItem
-            var CellData:Array<PlanTableCellDataMessageItem>
-            CellData = Array<PlanTableCellDataMessageItem>()
-            
-            tid = String(tidID)
-            ttid = String(tidID)
-            title = String(tidID)
-            tip = String(tidID)
-            
-            for i in 1..<111
-            {
-                CellDataItem = PlanTableCellDataMessageItem(
-                                                            row_type:0b111111011,
-                                                            left_data:String(i),left_alarm:String("20,00,一二三四五六日"),left_connect:String(i),
-                                                            right_data:String(i),right_alarm:String("2017,1,1,21,00"),right_connect:String(i))
-                
-                CellData.append(CellDataItem)
-            }
-            var temp = PlanTableDataMessageItem(
-                tid: tid,ttid: ttid,title: title,tip: tip,CellData: CellData)
-            
-            PlanTableDataMessage.sharePlanTableData().dataMessageItem.append(temp)
-            CellData.removeAll()
-        }
-        
         self.view.addSubview(backgroundButton)
         self.view.addSubview(backButton)
         self.view.addSubview(navTitle)
@@ -138,8 +106,12 @@ class PlanTableDetailController: UIViewController,UITextFieldDelegate,UITextView
     
     func setupPlanTableDataView()
     {
+        //为PlanTableDataView初始化数据
+        PlanTableDataMessage.sharePlanTableData().InitData(bubbleSection.tid!, ttid: 0)
+        
+        //默认进去是第0个ttid和 ttidRow
         self.PlanTableDataViewController = PlanTableDataView(frame:CGRectMake(0
-            , 70, self.view.frame.width, self.view.frame.height-70),planTableTTid:0,planTableTTidRow:0)
+            , 70, self.view.frame.width, self.view.frame.height-70),planTableTid:self.bubbleSection.tid,planTableTTid:0,planTableTTidRow:0)
         
         //创建一个重用的单元格
         self.PlanTableDataViewController!.registerClass(PlanTableDataViewCell.self, forCellReuseIdentifier: "MsgCell")
@@ -157,6 +129,20 @@ class PlanTableDetailController: UIViewController,UITextFieldDelegate,UITextView
             navTitle.text = bubbleSection.name
             planName.text = bubbleSection.name
             planDescribe.text=bubbleSection.tip
+            if(planDescribe.text == "")
+            {
+                DetailTextViewPlaceholder.placeholder = "详细信息"
+            }
+            else
+            {
+                DetailTextViewPlaceholder.placeholder = ""
+            }
+        }
+        else
+        {
+            navTitle.text = ""
+            planName.text = ""
+            planDescribe.text=""
             if(planDescribe.text == "")
             {
                 DetailTextViewPlaceholder.placeholder = "详细信息"
@@ -230,16 +216,49 @@ class PlanTableDetailController: UIViewController,UITextFieldDelegate,UITextView
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
+        if(textField == planName)
+        {
                 if (planName.text!.isEmpty)//是空
                 {
-                    navTitle.text = ""
+                    planName.text = bubbleSection.name
                 }
                 else
                 {
-                    navTitle.text = planName.text
+                    //未做修改
+                    if(planName.text == bubbleSection.name)
+                    {
+                        //无需更新数据库
+                    }
+                    else//修改了
+                    {
+                        var Item:[String] = [String(bubbleSection.tid),planName.text!,planDescribe.text]
+                        navTitle.text = planName.text
+                        bubbleSection.name = planName.text
+                        MySQL.shareMySQL().setLocalPlan(Item)
+                    }
+                    
                 }
+        }
         planName.resignFirstResponder()
     }
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        if(textView == planDescribe)
+        {
+            //未做修改
+            if(planDescribe.text == bubbleSection.tip)
+            {
+                //无需更新数据库
+            }
+            else//修改了
+            {
+                var Item:[String] = [String(bubbleSection.tid),self.planName.text!,self.planDescribe.text]
+                bubbleSection.tip = planDescribe.text
+                MySQL.shareMySQL().setLocalPlan(Item)
+            }
+        }
+    }
+    
     
     func textFieldDidBeginEditing(textField: UITextField)
     {

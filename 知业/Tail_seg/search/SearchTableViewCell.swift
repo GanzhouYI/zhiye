@@ -1,6 +1,6 @@
 import UIKit
 import Alamofire
-class PlanTableViewCell:UITableViewCell,Plan_Table_Status_Delegate
+class SearchTableViewCell:UITableViewCell,Plan_Table_Status_Delegate
 {
     let biaoqian = "fanbiaoqian1"
     var TableImageUrl:String!

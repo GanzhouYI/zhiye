@@ -1,12 +1,8 @@
 import Foundation
 import Alamofire
 
-class PlanNet:NSObject {
+class SearchNet:NSObject {
     static var Model:PlanNet?
-    //下载更新中的数量
-    static var UpdateNumber:Int = 0
-    //上传的数量
-    static var UpLoadNumber:Int = 0
     static var predicate:dispatch_once_t = 0
     class func sharedPlan()->PlanNet?{
         
@@ -19,21 +15,15 @@ class PlanNet:NSObject {
     typealias NetworkBlockInfo = (dataInfo:String)->Void
     typealias NetworkBlock = (dataInfo:String,data:[[String]])->Void
     
-    func DownPlan(dynamic_date:[String],block:NetworkBlock?)
+    func DownSearch(personInfo:String,block:NetworkBlock?)
     {
         //测试数据  仅仅用于没有表存在本地的情况下，如果本地创建了表是不行的
-        let urlString:String = "http://www.loveinbc.com/zhiye/downPlan.php"
-        let parameters = ["uid":String(LoginModel.sharedLoginModel()!.returnMyUid())]
+        let urlString:String = "http://www.loveinbc.com/zhiye/downSearch.php"
+        let parameters = ["Info":personInfo]
         
-        print(LoginModel.sharedLoginModel()?.returnMyUid())
-        print("输出更新动态请求的lastDate")
-        print(parameters)
-        
-        print("Step:2")
         Alamofire.request(.POST, urlString, parameters: parameters)
             .responseJSON{ response in
-                print("数据")
-                print("Step:3")
+                print("DownSearch数据")
                 switch response.result
                 {
                 case .Success:
@@ -73,8 +63,6 @@ class PlanNet:NSObject {
                                 }
                             }
                             
-                            //服务器端数据和本地对比
-                            SqlReturnInfo = MySQL.shareMySQL().DataFromNet(infoDataItem)
                             if(SqlReturnInfo == "本地需要更新")
                             {
                                 infoData.append(infoDataItem)
@@ -234,7 +222,7 @@ class PlanNet:NSObject {
     }
     
     
-    func downDynamicImage(url:String,dynamic_id:String){
+    func downSearchImage(url:String,dynamic_id:String){
         //按动态id命名图片
         var userDirForDynamic="/zhiye/user/"+LoginModel.sharedLoginModel()!.returnMyName()+"/dynamic"
         print("downkaishi ")

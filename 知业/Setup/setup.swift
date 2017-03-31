@@ -6,8 +6,11 @@ class setupView: UIView {
     var setupkuang = UIButton()
     var cleanOtherUser = UIButton()
     var cleanCache = UIButton()
+    
     var chatUs = UIButton()
     var chatTextView=UITextView()
+    var contactUsMessage:String = ""
+    var returnTip = UITextView()
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -42,6 +45,13 @@ class setupView: UIView {
         chatUs.tintColor=UIColor.whiteColor()
         self.addSubview(chatUs)
 
+        returnTip.frame = CGRectMake(110, self.frame.height+200+60, self.frame.width-220, 60)
+        returnTip.editable=false
+        returnTip.textAlignment = NSTextAlignment.Center
+        returnTip.font = UIFont.boldSystemFontOfSize(19)
+        returnTip.backgroundColor = UIColor.clearColor()
+        returnTip.selectable = false //防止复制
+        self.addSubview(returnTip)
         
         UIView.animateWithDuration(1, // 动画时长
             delay:0 ,// 动画延迟z
@@ -54,6 +64,7 @@ class setupView: UIView {
                 self.cleanCache.frame=CGRectMake(110, 230, self.frame.width-220, 30)
                 self.chatTextView.frame=CGRectMake(110, 280, self.frame.width-220, 100)
                 self.chatUs.frame=CGRectMake(110, 400, self.frame.width-220, 30)
+                self.returnTip.frame=CGRectMake(110, 460, self.frame.width-220, 60)
             }, completion:{(Bool)-> Void in
                 self.blackBackGround.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)})
         
@@ -61,7 +72,29 @@ class setupView: UIView {
     
     func chat()
     {
-        
+        self.endEditing(true)
+        if(self.returnTip.text == "网络错误，请检测网络" || (chatTextView.text != "" && contactUsMessage != chatTextView.text))
+        {
+            contactUsMessage = chatTextView.text
+            contactUsNet.sharedcontactUsNet()?.contactUs(chatTextView.text, block: { (dataInfo) in
+                if(dataInfo == "谢谢您的反馈")
+                {
+                    self.returnTip.text = "谢谢您的反馈,我们会做的更好"
+                }
+                else if(dataInfo == "出现故障,请联系QQ1025435307")
+                {
+                    self.returnTip.text = "出现故障,请联系QQ1025435307"
+                }
+                else
+                {
+                    self.returnTip.text = "网络错误，请检测网络"
+                }
+            })
+        }
+        else
+        {
+            //两次反馈的信息一样，不做处理
+        }
     }
     
     func CleanOtherUser()
@@ -80,8 +113,10 @@ class setupView: UIView {
             animations: {()-> Void in
                 self.setupkuang.frame = CGRectMake(self.frame.width/2-50, -100,100, 100)
                 self.cleanOtherUser.frame=CGRectMake(self.frame.width/3+10, self.frame.height, self.frame.width/3-20, 30)
+                self.chatTextView.frame=CGRectMake(self.frame.width/3+10, self.frame.height+50, self.frame.width/3-20, 30)
                 self.cleanCache.frame=CGRectMake(self.frame.width/3+10, self.frame.height+50, self.frame.width/3-20, 30)
                 self.chatUs.frame=CGRectMake(self.frame.width/3+10, -30, self.frame.width/3-20, 30)
+                self.returnTip.frame=CGRectMake(self.frame.width/3+10, -30, self.frame.width/3-20, 60)
             }, completion: {(finnish)-> Void in
                 self.blackBackGround.removeFromSuperview()
                 self.setupkuang.removeFromSuperview()

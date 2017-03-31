@@ -1,11 +1,11 @@
 import UIKit
-
-class PlanTableView:UITableView,UITableViewDelegate, UITableViewDataSource
+/*
+class SearchTableView:UITableView,UITableViewDelegate, UITableViewDataSource
 {
     //用于保存所有消息
-    var bubbleSection:Array<PlanTableMessageItem>?
+    var bubbleSection:Array<SearchTableMessageItem>?
     //数据源，用于与 ViewController 交换数据
-    weak var didSelectDelegate : Plan_Table_Delegate?
+    weak var didSelectDelegate : Search_Table_Delegate?
     //下拉刷新
     var refreshControl = UIRefreshControl()
     var timer:NSTimer!
@@ -20,7 +20,7 @@ class PlanTableView:UITableView,UITableViewDelegate, UITableViewDataSource
     
     init(frame:CGRect)
     {
-        self.bubbleSection = Array<PlanTableMessageItem>()
+        self.bubbleSection = Array<SearchTableMessageItem>()
         
         super.init(frame:frame,  style:UITableViewStyle.Plain)
 
@@ -38,18 +38,13 @@ class PlanTableView:UITableView,UITableViewDelegate, UITableViewDataSource
         refreshControl.attributedTitle = NSAttributedString(string: "下拉刷新数据")
         self.addSubview(refreshControl)
         
-        //导入本地数据
-        searchLocalPlanData()
-        refreshData()
         
         newPlanView = UIButton(frame: CGRectMake(0, self.frame.height, self.frame.width, 60))
         newPlanView.setTitle("新增+", forState: UIControlState.Normal)
         newPlanView.setTitleColor(UIColor(red: 99/255, green: 184/255, blue: 255/255, alpha: 1), forState: UIControlState.Normal)
         newPlanView.addTarget(self, action: "NewPlanFunc", forControlEvents: UIControlEvents.TouchUpInside)
-        self.tableFooterView = self.newPlanView
+        self.tableHeaderView = self.newPlanView
         
-        print("beginReturnLastTime")
-       MySQL.shareMySQL().ReturnLastTime("2017-02-10 17:38:36")
     }
  
     //显示新增按钮
@@ -57,41 +52,6 @@ class PlanTableView:UITableView,UITableViewDelegate, UITableViewDataSource
         newPlanView!.backgroundColor = UIColor.whiteColor()
     }
     
-    //点击新增
-    func NewPlanFunc()
-    {
-        MySQL.shareMySQL().insertEmptyPlan()
-        
-        // PlanTableDataMessage 处理
-        //PlanTableDataMessage.sharePlanTableData().insertNewPlanCell(String(planTableTid),planTableTTid: String(planTableTTid))
-        searchLocalPlanData()
-
-        self.didSelectDelegate?.Plan_Table_DidSelect(self.bubbleSection!.count-1,bubbleSection: self.bubbleSection![self.bubbleSection!.count-1])
-    }
-    
-    // 下拉刷新数据
-    func refreshData() {
-        //刷新远程数据
-        if(IsLoading == 0)
-        {
-            IsLoading += 1
-            refreshControl.attributedTitle = NSAttributedString(string: "下拉刷新数据")
-            updateNewDynamic()
-        }
-        else
-        {
-            refreshControl.attributedTitle = NSAttributedString(string: "正在下载或上传")
-            self.refreshControl.endRefreshing()
-        }
-    }
-    
-    public func searchLocalPlanData(){
-        self.bubbleSection?.removeAll()
-        //重新加载本地数据库
-        PlanTableMessageManage.sharePlanMessageManage().RefreshLocalPlan()
-        self.bubbleSection=PlanTableMessageManage.sharePlanMessageManage().dataMessageItem
-        self.reloadData()
-    }
     
     func updateNewDynamic(){
         //测试数据  仅仅用于没有表存在本地的情况下，如果本地创建了表是不行的
@@ -192,13 +152,6 @@ class PlanTableView:UITableView,UITableViewDelegate, UITableViewDataSource
     
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction] {
         
-        /*let readed = UITableViewRowAction(style: .Normal, title: "标为已读") {
-            action, index in
-            print("favorite button tapped")
-            self.alertShow("标为已读")
-        }
-        readed.backgroundColor = UIColor.orangeColor()
-        */
         let delete = UITableViewRowAction(style: .Normal, title: "删除") {
             action, index in
             print("share button tapped")
@@ -209,27 +162,4 @@ class PlanTableView:UITableView,UITableViewDelegate, UITableViewDataSource
         return [delete]
     }
     
-    func ActionForPlanCell(title:String,tid:Int)
-    {
-        if(title == "删除")
-        {
-            MySQL.shareMySQL().DeletePlan(tid)
-            searchLocalPlanData()
-        }
-    }
-    
-    func tableView(tableView: UITableView,
-                     titleForDeleteConfirmationButtonForRowAt indexPath: NSIndexPath)-> String? {
-            return "确定删除？"
-    }
-    
-    /*func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-            // 同时你也需要实现本方法,否则自定义action是不会显示的,啦啦啦
-            if(editingStyle == UITableViewCellEditingStyle.Delete)
-            {
-                MySQL.shareMySQL().DeletePlan(self.bubbleSection![indexPath.row].tid)
-                searchLocalPlanData()
-            }
-    }*/
-    
-}
+}*/

@@ -1,15 +1,22 @@
 import UIKit
-
 class PlanTableDataView:UITableView,UITableViewDelegate, UITableViewDataSource
 {
-    var planTableTTid:Int!
-    var planTableTTidRow:Int!
+    var writingIndex:Int = 0
+    var planTableTid:Int = 0
+    var planTableTTid:Int = 0
+    
+    //在 PlanTableDataMessage中PlanTableCellData的下标
+    var planTableTTidRow:Int = 0
+    //表有几行
+    var numberOfPlanRow:Int = 0
+    
     //数据源，用于与 ViewController 交换数据
     weak var didSelectDelegate : Plan_Table_Data_Delegate?
     //设置闹铃  用于Cell传递界面显示、设置闹铃
     //PlanTableDetailController 完成协议
     weak var setAlarmDelegate:Plan_Table_SetAlarm_Delegate?
     //新增计划
+    var DidCellAdd:Bool = false
     var newPlanView:UIButton!
     
     // 假函数， 由PlanTableDetailController实现
@@ -22,8 +29,9 @@ class PlanTableDataView:UITableView,UITableViewDelegate, UITableViewDataSource
         
         super.init(coder: aDecoder)
     }
-    init(frame:CGRect,planTableTTid:Int,planTableTTidRow:Int)
+    init(frame:CGRect,planTableTid:Int,planTableTTid:Int,planTableTTidRow:Int)
     {
+        self.planTableTid = planTableTid
         self.planTableTTid = planTableTTid
         self.planTableTTidRow = planTableTTidRow
         super.init(frame:frame,  style:UITableViewStyle.Plain)
@@ -38,8 +46,12 @@ class PlanTableDataView:UITableView,UITableViewDelegate, UITableViewDataSource
         //searchDynamicToFirstTable()
        // refreshData()
         
-        newPlanView = UIButton(frame: CGRectMake(0, self.frame.height, self.frame.width, 120))
+        newPlanView = UIButton(frame: CGRectMake(0, self.frame.height, self.frame.width, 60))
+        //newPlanView.titleLabel?.font = UIFont.systemFontOfSize(10)
+        newPlanView.setTitle("新增+", forState: UIControlState.Normal)
+        newPlanView.setTitleColor(UIColor(red: 99/255, green: 184/255, blue: 255/255, alpha: 1), forState: UIControlState.Normal)
         newPlanView.addTarget(self, action: "NewPlanFunc", forControlEvents: UIControlEvents.TouchUpInside)
+        newPlanView!.backgroundColor = UIColor.whiteColor()
         self.tableFooterView = self.newPlanView
         
         //在tableview 和tableviewcell中
@@ -49,9 +61,9 @@ class PlanTableDataView:UITableView,UITableViewDelegate, UITableViewDataSource
     
     func HandleTap(sender:UITapGestureRecognizer)
     {
-        var indexpath = NSIndexPath(forRow: 6, inSection: 0)
+        //var indexpath = NSIndexPath(forRow: 6, inSection: 0)
         
-        self.scrollToRowAtIndexPath(indexpath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+        //self.scrollToRowAtIndexPath(indexpath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
         self.reloadData()
         if sender.state == .Ended
         {
@@ -62,59 +74,25 @@ class PlanTableDataView:UITableView,UITableViewDelegate, UITableViewDataSource
     }
 
     //新增计划
-    private func ShowPlanFunc() {
-        newPlanView!.backgroundColor = UIColor.orangeColor()
-    }
-    
-    private func NewPlanFunc()
-    {
-        //self.didSelectDelegate?.Plan_Table_DidSelect(10,bubbleSection: bubbleSection)
-    }
-    
-    
-    // 下拉刷新数据
-    func refreshData() {
-        //刷新远程数据
-        updateNewDynamic()
+    func NewPlanFunc() {
+        DidCellAdd = true
         
+        //本地数据库处理
+        //uid int,tid int,ttid int,ttid_row
+        var Item:[String] = [String(LoginModel.sharedLoginModel()!.returnMyUid()),String(planTableTid),String(planTableTTid),String(numberOfPlanRow)]
+        MySQL.shareMySQL().insertPlanEmptyCell(Item)
+        
+        // PlanTableDataMessage 处理
+        PlanTableDataMessage.sharePlanTableData().insertNewPlanCell(String(planTableTid),planTableTTid: String(planTableTTid))
+        self.reloadData()
     }
+    
     
     func searchDynamicToFirstTable(){
         //self.bubbleSection
        // self.bubbleSection=MySQL.shareMySQL().searchDynamic()
     }
     
-    func updateNewDynamic(){
-        var ind:Int=1
-        let str:String = MySQL.shareMySQL().lastDateDynamic()
-        downDynamic.sharedDownDynamic()?.conNet(str,block:{(dataInfo,data) -> Void in
-            if dataInfo == "已经是最新的"
-            {
-                print("updateDynamicFirst() 已经是最新的")
-                return
-            }
-            else if dataInfo == "有更新数据"
-            {
-                print("有更新数据，开始往table和本地数据库导入")
-                for i in 0..<data.count
-                {
-                    var tempdata = data[i]
-                    //let temp = PlanTableDataMessageItem(dynamic_id:data[i][0],FirstTableImage: data[i][2],FirstTableTitle: data[i][7],FirstTableDetail: data[i][3],FirstTable_yanjin_Num: Int(data[i][4])!,FirstTable_pinglun_Num: Int(data[i][5])!)
-                    //self.bubbleSection!.append(temp)
-                    //MySQL.shareMySQL().insertDynamic(data[i])
-                    //downDynamic.sharedDownDynamic()?.downDynamicImage(data[i][2],dynamic_id: data[i][0])
-                }
-            }
-            else if dataInfo == "网络错误"
-            {
-                print("FirstTable网络错误")
-                MBProgressHUD.showDelayHUDToView(self, message: "网络连接错误")
-            }
-            //获取数据完毕
-            super.reloadData()
-            self.reloadData()
-        })
-    }
     
     override func reloadData()
     {
@@ -132,7 +110,17 @@ class PlanTableDataView:UITableView,UITableViewDelegate, UITableViewDataSource
     //返回指定分区的行数
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return PlanTableDataMessage.sharePlanTableData().ReturnTableDataCount(String(planTableTTid))
+        numberOfPlanRow = PlanTableDataMessage.sharePlanTableData().ReturnTableDataCount(String(planTableTid),planTableTTid: String(planTableTTid))
+        //小于100 才可以添加新的一行
+        if(numberOfPlanRow<100)
+        {
+            self.newPlanView.enabled = true
+        }
+        else
+        {
+            self.newPlanView.enabled = false
+        }
+        return numberOfPlanRow
     }
         
     //用于确定单元格的高度，如果此方法实现得不对，单元格与单元格之间会错位
@@ -145,15 +133,13 @@ class PlanTableDataView:UITableView,UITableViewDelegate, UITableViewDataSource
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         let cellId = "MsgCell"
-        let image_frame = CGRectMake(0, 0, self.frame.width, 80)
-        var cell =  PlanTableDataViewCell(frame:image_frame,planTableTTid: planTableTTid,planTableTTidRow:planTableTTidRow,NOCell:indexPath.row,data:PlanTableDataMessage.sharePlanTableData().ReturnCellDataItem(String(planTableTTid), NOCell:indexPath.row), reuseIdentifier:cellId)
+        let heighForRow = CGRectMake(0, 0, self.frame.width, 90)
+
+        var cell =  PlanTableDataViewCell(frame:heighForRow,planTableTid:planTableTid,planTableTTid: planTableTTid,NOCell:indexPath.row,data:PlanTableDataMessage.sharePlanTableData().ReturnCellDataItem(String(planTableTid),planTableTTid: String(planTableTTid), NOCell:indexPath.row), reuseIdentifier:cellId)
         cell.setAlarmDelegate = self.setAlarmDelegate
+
         //当下拉到底部，执行loadMore()
         print("Cell For Row"+String(indexPath.row))
-        if (indexPath.row < 9)
-        {
-            ShowPlanFunc()
-        }
             return cell
     }
     
