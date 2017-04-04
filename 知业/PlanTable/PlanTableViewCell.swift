@@ -155,8 +155,36 @@ class PlanTableViewCell:UITableViewCell,Plan_Table_Status_Delegate
         self.TipLabel?.text = "正在上传"
         self.TipLabel!.backgroundColor = UIColor(red: 99/255, green: 184/255, blue: 255/255, alpha: 1)
         
-        PlanNet.sharedPlan()?.UpLoadPlan(["":""], block: { (dataInfo) in
-            
+        PlanNet.sharedPlan()?.ServerIsExistPlan(String(LoginModel.sharedLoginModel()!.MyUid!),tid: String(msgItem.tid!), block: { (dataInfo) in
+            if(dataInfo == "创建成功")
+            {
+                print("创建成功")
+                    PlanNet.sharedPlan()?.UpLoadPlanCell(String(LoginModel.sharedLoginModel()!.MyUid!),tid: String(self.msgItem.tid!), block: { (dataInfo) in
+                        if(dataInfo == "更新成功")
+                        {
+                            self.msgItem.status = 0
+                            print("更新成功")
+                        }
+                        else if(dataInfo == "更新失败")
+                        {
+                            print("upLoad更新失败")
+                            self.TipLabel?.text = "更新失败，请联系我们"
+                        }
+                        else
+                        {
+                        print("upLoad网络连接错误")
+                            self.TipLabel?.text = "网络错误"
+                        }
+                    })
+            }
+            else if(dataInfo == "创建失败")
+            {
+                self.TipLabel?.text = "更新失败，请联系我们"
+            }
+            else
+            {
+                self.TipLabel?.text = "网络错误"
+            }
         })
     }
     
@@ -165,6 +193,11 @@ class PlanTableViewCell:UITableViewCell,Plan_Table_Status_Delegate
     {
         //    status (0、最新数据   1、需要更新   2、需要上传   3、已删除  4、正在上传   5、正在下载  6、需要下载)
         print(String(self.msgItem.status)+"msgItem")
+         self.TableTitle?.text = self.msgItem.name
+        self.TableDetail?.text = self.msgItem.tip
+        self.Table_yanjin_Num?.text = self.msgItem.Table_yanjin_Num
+        self.Table_pinglun_Num?.text = self.msgItem.Table_pinglun_Num
+
         if(index == 0)
         {
             self.TipLabel?.text = "更新完成"

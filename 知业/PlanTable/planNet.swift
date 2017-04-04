@@ -111,12 +111,29 @@ class PlanNet:NSObject {
         print("Step:5")
     }
     
-    //上传plan到服务器
-    func UpLoadPlan(planData:[String:String],block:NetworkBlockInfo?)
+    //服务器是否存在该表,不存在则创建
+    func ServerIsExistPlan(uid:String,tid:String,block:NetworkBlockInfo?)
     {
-        let urlString:String = "http://www.loveinbc.com/zhiye/UpLoadPlan.php"
-        //var parameter:[String:AnyObject] = ["cellCount":"10","1":["uid":"1","tid":"0","ttid":"0","ttid_row":"1","row_type":"987","left_data":"gai","left_alarm":"06,00,一二","left_connect":"-1","right_data":"gai","right_alarm":"06,00,二四","right_connect":"-1"]]
-        var parameter:[String:AnyObject] = ["cellCount":"10","1":["1","0","0","1","987","gai","06,00,一二","-1","gai","06,00,二四","-1"]]
+        let urlString:String = "http://www.loveinbc.com/zhiye/IsExistPlan.php"
+        var PlanInfo:[String] = MySQL.shareMySQL().ReturnPlanInfoToServer(tid, uid: uid)
+        var mysql = "insert into zhiye_Table (tid,uid,name,tip,status,create_time,last_time,alarm_time,Table_yanjin_Num,Table_pinglun_Num,ttid,ttid_row) values("
+        mysql += tid+","
+        mysql += uid+","
+        mysql += "'"+PlanInfo[0]+"'"+","
+        mysql += "'"+PlanInfo[1]+"'"+","
+        mysql += PlanInfo[2]+","
+        mysql += "'"+PlanInfo[3]+"'"+","
+        mysql += "'"+PlanInfo[4]+"'"+","
+        mysql += "'"+PlanInfo[5]+"'"+","
+        mysql += PlanInfo[6]+","
+        mysql += PlanInfo[7]+","
+        mysql += PlanInfo[8]+","
+        mysql += PlanInfo[9]+")"
+
+        //var parameter:[String:String] = ["mysql":mysql]
+        var parameter:[String:String] = ["uid":uid,"tid":tid,"name":PlanInfo[0],"tip":PlanInfo[1],"status":PlanInfo[2],"create_time":PlanInfo[3],"last_time":PlanInfo[4],"alarm_time":PlanInfo[5],"Table_yanjin_Num":PlanInfo[6],"Table_pinglun_Num":PlanInfo[7],"ttid":PlanInfo[8],"ttid_row":PlanInfo[9]]
+        print("ServerIsExistPlan")
+        print(parameter)
         Alamofire.request(.POST, urlString, parameters: parameter)
             .responseJSON{ response in
                 print("数据")
@@ -128,15 +145,70 @@ class PlanNet:NSObject {
                     let str = (response.result.value!)as?String
                     print(str)
                     
-                    if(str == "传输失败")
+                    if(str == "创建成功")
                     {
-                        print("upLoad传输失败")
-                        block?(dataInfo:"传输失败")
+                        print("server创建plan成功")
+                        block?(dataInfo:"创建成功")
                     }
-                    else if(str == "传输成功")
+                    else if(str == "创建失败")
                     {
-                        print("upLoad传输成功")
-                        block?(dataInfo:"传输成功")
+                        print("创建失败")
+                        block?(dataInfo:"创建失败")
+                    }
+                    break
+                case .Failure:
+                    print("网络连接错误")
+                    block?(dataInfo:"网络错误")
+                    break
+                }
+            }
+            .progress { (bytesWrite:Int64, totalBytesWrite:Int64, totalBytesExpectedToWrite:Int64) in
+                print("bytesWrite:",bytesWrite)
+                print("totalBytesWrite:",totalBytesWrite)
+                print("totalBytesExpectedToWrite:",totalBytesExpectedToWrite)
+                /*
+                 监听文件下载进度，此 block 在子线程中执行。
+                 */
+        }
+        
+    }
+    
+    //上传planCell到服务器
+    func UpLoadPlanCell(uid:String,tid:String,block:NetworkBlockInfo?)
+    {
+        let urlString:String = "http://www.loveinbc.com/zhiye/UpLoadPlanCell.php"
+        //var parameter:[String:AnyObject] = ["cellCount":"10","1":["uid":"1","tid":"0","ttid":"0","ttid_row":"1","row_type":"987","left_data":"gai","left_alarm":"06,00,一二","left_connect":"-1","right_data":"gai","right_alarm":"06,00,二四","right_connect":"-1"]]
+        var parameter:[String:String] = ["uid":uid,"tid":tid,"sqlServer":MySQL.shareMySQL().UpLoadUpdateCell(uid, tid: tid)]
+        
+        //因为之前ServerIsExistPlan在服务器创建了表，但是cell里是空的所以更新成功
+        if(parameter["sqlServer"] == "0")
+        {
+            print("更新成功")
+            MySQL.shareMySQL().UpdatePlanStatus("0", tid: Int(tid)!)
+            block?(dataInfo:"更新成功")
+            return
+        }
+        Alamofire.request(.POST, urlString, parameters: parameter)
+            .responseJSON{ response in
+                print("数据")
+                switch response.result
+                {
+                case .Success:
+                    print("UpLoadPlan 网络连接正常")
+                    print(response.result.value!)
+                    let str = (response.result.value!)as?String
+                    print(str)
+                    
+                    if(str == "更新成功")
+                    {
+                        print("更新成功")
+                        MySQL.shareMySQL().UpdatePlanStatus("0", tid: Int(tid)!)
+                        block?(dataInfo:"更新成功")
+                    }
+                    else if(str == "更新失败")
+                    {
+                        print("upLoad更新失败")
+                        block?(dataInfo:"更新失败")
                     }
                     break
                 case .Failure:

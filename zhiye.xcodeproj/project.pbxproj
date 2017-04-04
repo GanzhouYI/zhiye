@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CF00719A1E913128009F4060 /* DynamicCommentDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0071921E913128009F4060 /* DynamicCommentDetailController.swift */; };
+		CF00719B1E913128009F4060 /* DynamicCommentNet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0071931E913128009F4060 /* DynamicCommentNet.swift */; };
+		CF00719D1E913128009F4060 /* DynamicCommentTableDataMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0071961E913128009F4060 /* DynamicCommentTableDataMessage.swift */; };
+		CF00719E1E913128009F4060 /* DynamicCommentTableDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0071971E913128009F4060 /* DynamicCommentTableDataView.swift */; };
+		CF00719F1E913128009F4060 /* DynamicCommentTableDataViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0071981E913128009F4060 /* DynamicCommentTableDataViewCell.swift */; };
 		CF19267A1E4D823E00639111 /* planSQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1926791E4D823E00639111 /* planSQL.swift */; };
 		CF2FC1461CBA23DD000DF247 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF2FC1391CBA23CD000DF247 /* Alamofire.framework */; };
 		CF3FAD9B1E2E61330011E24A /* alarm.png in Resources */ = {isa = PBXBuildFile; fileRef = CF3FAD2B1E2E61330011E24A /* alarm.png */; };
@@ -117,6 +122,13 @@
 		CF4FD7951CC66286006B755D /* String-Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4FD7921CC66286006B755D /* String-Extras.swift */; };
 		CF6184021E39AAD700927312 /* AlarmPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6184011E39AAD700927312 /* AlarmPickerView.swift */; };
 		CF75E27A1E2FB08F00198E5B /* SetAlarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF75E2791E2FB08F00198E5B /* SetAlarm.swift */; };
+		CF7FF1341E8DF74B004245E1 /* SearchSQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7FF1291E8DF74B004245E1 /* SearchSQL.swift */; };
+		CF7FF1361E8DF74B004245E1 /* SearchTableDataMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7FF12C1E8DF74B004245E1 /* SearchTableDataMessage.swift */; };
+		CF7FF1371E8DF74B004245E1 /* SearchTableDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7FF12D1E8DF74B004245E1 /* SearchTableDataView.swift */; };
+		CF7FF1381E8DF74B004245E1 /* SearchTableDataViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7FF12E1E8DF74B004245E1 /* SearchTableDataViewCell.swift */; };
+		CF7FF13A1E8DF74B004245E1 /* SearchTableData_P.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7FF1301E8DF74B004245E1 /* SearchTableData_P.swift */; };
+		CF7FF13C1E8DF74B004245E1 /* SearchDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7FF1321E8DF74B004245E1 /* SearchDetailController.swift */; };
+		CF7FF1461E8E2F2F004245E1 /* SearchNet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7FF1451E8E2F2F004245E1 /* SearchNet.swift */; };
 		CF81574D1E8A1E3F00099C18 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF81574C1E8A1E3F00099C18 /* InfoViewController.swift */; };
 		CF8C7E6A1E2E597B00C0E3C9 /* dynamicSQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFF4F9741E22989A009FEB0B /* dynamicSQL.swift */; };
 		CF8C7E6B1E2E597B00C0E3C9 /* FirstTableMessageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFF4F97A1E22989A009FEB0B /* FirstTableMessageItem.swift */; };
@@ -125,10 +137,8 @@
 		CFBF26B11E27A76400904F64 /* PlanTableDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBF26AE1E27A76300904F64 /* PlanTableDataView.swift */; };
 		CFBF26B21E27A76400904F64 /* PlanTableDataViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBF26AF1E27A76400904F64 /* PlanTableDataViewCell.swift */; };
 		CFBF26B41E27A8A400904F64 /* PlanTableData_P.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBF26B31E27A8A400904F64 /* PlanTableData_P.swift */; };
+		CFCF1B9A1E91F0C7009FFBB2 /* Dynamic_Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFCF1B991E91F0C7009FFBB2 /* Dynamic_Protocol.swift */; };
 		CFEF0D521CC084890067C135 /* ROHUD+MBProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF0D511CC084890067C135 /* ROHUD+MBProgressHUD.swift */; };
-		CFF3EC561E8D10020000CC49 /* SearchNet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFF3EC521E8D10020000CC49 /* SearchNet.swift */; };
-		CFF3EC581E8D10020000CC49 /* SearchTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFF3EC541E8D10020000CC49 /* SearchTableView.swift */; };
-		CFF3EC591E8D10020000CC49 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFF3EC551E8D10020000CC49 /* SearchTableViewCell.swift */; };
 		CFF4FAC61E22989A009FEB0B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFF4F96A1E22989A009FEB0B /* AppDelegate.swift */; };
 		CFF4FAC71E22989A009FEB0B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CFF4F96B1E22989A009FEB0B /* Assets.xcassets */; };
 		CFF4FAC81E22989A009FEB0B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CFF4F96C1E22989A009FEB0B /* LaunchScreen.storyboard */; };
@@ -307,6 +317,11 @@
 /* Begin PBXFileReference section */
 		288CADD1E2DF8E4B1C995829 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		A8D1DB1B31366678494CF7F1 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		CF0071921E913128009F4060 /* DynamicCommentDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicCommentDetailController.swift; sourceTree = "<group>"; };
+		CF0071931E913128009F4060 /* DynamicCommentNet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicCommentNet.swift; sourceTree = "<group>"; };
+		CF0071961E913128009F4060 /* DynamicCommentTableDataMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicCommentTableDataMessage.swift; sourceTree = "<group>"; };
+		CF0071971E913128009F4060 /* DynamicCommentTableDataView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicCommentTableDataView.swift; sourceTree = "<group>"; };
+		CF0071981E913128009F4060 /* DynamicCommentTableDataViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicCommentTableDataViewCell.swift; sourceTree = "<group>"; };
 		CF083EBD1C476A1900734D47 /* yiroote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yiroote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF083ED11C476A1900734D47 /* zhiyeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = zhiyeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF083EDC1C476A1900734D47 /* zhiyeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = zhiyeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -420,17 +435,22 @@
 		CF4FD7921CC66286006B755D /* String-Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String-Extras.swift"; sourceTree = "<group>"; };
 		CF6184011E39AAD700927312 /* AlarmPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlarmPickerView.swift; path = PlanTableData/AlarmPickerView.swift; sourceTree = "<group>"; };
 		CF75E2791E2FB08F00198E5B /* SetAlarm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SetAlarm.swift; path = PlanTableData/SetAlarm.swift; sourceTree = "<group>"; };
+		CF7FF1291E8DF74B004245E1 /* SearchSQL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchSQL.swift; path = search/SearchSQL.swift; sourceTree = "<group>"; };
+		CF7FF12C1E8DF74B004245E1 /* SearchTableDataMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableDataMessage.swift; sourceTree = "<group>"; };
+		CF7FF12D1E8DF74B004245E1 /* SearchTableDataView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableDataView.swift; sourceTree = "<group>"; };
+		CF7FF12E1E8DF74B004245E1 /* SearchTableDataViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableDataViewCell.swift; sourceTree = "<group>"; };
+		CF7FF1301E8DF74B004245E1 /* SearchTableData_P.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchTableData_P.swift; path = search/SearchTableData_P.swift; sourceTree = "<group>"; };
+		CF7FF1321E8DF74B004245E1 /* SearchDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchDetailController.swift; path = search/SearchDetailController.swift; sourceTree = "<group>"; };
+		CF7FF1451E8E2F2F004245E1 /* SearchNet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchNet.swift; path = search/SearchNet.swift; sourceTree = "<group>"; };
 		CF81574C1E8A1E3F00099C18 /* InfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		CFA110891E8A7F7A0062D767 /* contactUsNet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = contactUsNet.swift; sourceTree = "<group>"; };
 		CFBF26AD1E27A76300904F64 /* PlanTableDataMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlanTableDataMessage.swift; path = PlanTableData/PlanTableDataMessage.swift; sourceTree = "<group>"; };
 		CFBF26AE1E27A76300904F64 /* PlanTableDataView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlanTableDataView.swift; path = PlanTableData/PlanTableDataView.swift; sourceTree = "<group>"; };
 		CFBF26AF1E27A76400904F64 /* PlanTableDataViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlanTableDataViewCell.swift; path = PlanTableData/PlanTableDataViewCell.swift; sourceTree = "<group>"; };
 		CFBF26B31E27A8A400904F64 /* PlanTableData_P.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanTableData_P.swift; sourceTree = "<group>"; };
+		CFCF1B991E91F0C7009FFBB2 /* Dynamic_Protocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dynamic_Protocol.swift; sourceTree = "<group>"; };
 		CFEF0D511CC084890067C135 /* ROHUD+MBProgressHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ROHUD+MBProgressHUD.swift"; sourceTree = "<group>"; };
 		CFEF0D531CC085770067C135 /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
-		CFF3EC521E8D10020000CC49 /* SearchNet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchNet.swift; path = search/SearchNet.swift; sourceTree = "<group>"; };
-		CFF3EC541E8D10020000CC49 /* SearchTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchTableView.swift; path = search/SearchTableView.swift; sourceTree = "<group>"; };
-		CFF3EC551E8D10020000CC49 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchTableViewCell.swift; path = search/SearchTableViewCell.swift; sourceTree = "<group>"; };
 		CFF4F96A1E22989A009FEB0B /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CFF4F96B1E22989A009FEB0B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CFF4F96D1E22989A009FEB0B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -565,6 +585,28 @@
 				A8D1DB1B31366678494CF7F1 /* Pods.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		CF0071911E913128009F4060 /* DynamicComment */ = {
+			isa = PBXGroup;
+			children = (
+				CF0071921E913128009F4060 /* DynamicCommentDetailController.swift */,
+				CF0071931E913128009F4060 /* DynamicCommentNet.swift */,
+				CFCF1B991E91F0C7009FFBB2 /* Dynamic_Protocol.swift */,
+				CF0071951E913128009F4060 /* DynamicCommentTableData */,
+			);
+			name = DynamicComment;
+			path = PlanTable/DynamicComment;
+			sourceTree = "<group>";
+		};
+		CF0071951E913128009F4060 /* DynamicCommentTableData */ = {
+			isa = PBXGroup;
+			children = (
+				CF0071961E913128009F4060 /* DynamicCommentTableDataMessage.swift */,
+				CF0071971E913128009F4060 /* DynamicCommentTableDataView.swift */,
+				CF0071981E913128009F4060 /* DynamicCommentTableDataViewCell.swift */,
+			);
+			path = DynamicCommentTableData;
 			sourceTree = "<group>";
 		};
 		CF083EB41C476A1900734D47 = {
@@ -808,6 +850,17 @@
 			path = "页面标头图标";
 			sourceTree = "<group>";
 		};
+		CF7FF12A1E8DF74B004245E1 /* PlanTableData */ = {
+			isa = PBXGroup;
+			children = (
+				CF7FF12C1E8DF74B004245E1 /* SearchTableDataMessage.swift */,
+				CF7FF12D1E8DF74B004245E1 /* SearchTableDataView.swift */,
+				CF7FF12E1E8DF74B004245E1 /* SearchTableDataViewCell.swift */,
+			);
+			name = PlanTableData;
+			path = search/PlanTableData;
+			sourceTree = "<group>";
+		};
 		CFBF26A51E27A6E500904F64 /* PlanTableData */ = {
 			isa = PBXGroup;
 			children = (
@@ -823,9 +876,11 @@
 		CFF3EC4A1E8D0FEC0000CC49 /* search */ = {
 			isa = PBXGroup;
 			children = (
-				CFF3EC521E8D10020000CC49 /* SearchNet.swift */,
-				CFF3EC541E8D10020000CC49 /* SearchTableView.swift */,
-				CFF3EC551E8D10020000CC49 /* SearchTableViewCell.swift */,
+				CF7FF1451E8E2F2F004245E1 /* SearchNet.swift */,
+				CF7FF1291E8DF74B004245E1 /* SearchSQL.swift */,
+				CF7FF1301E8DF74B004245E1 /* SearchTableData_P.swift */,
+				CF7FF12A1E8DF74B004245E1 /* PlanTableData */,
+				CF7FF1321E8DF74B004245E1 /* SearchDetailController.swift */,
 			);
 			name = search;
 			sourceTree = "<group>";
@@ -848,6 +903,7 @@
 				CFF4F9841E22989A009FEB0B /* MainViewController_M.swift */,
 				CFF4F9851E22989A009FEB0B /* MainViewController_V.swift */,
 				CFF4F9861E22989A009FEB0B /* MyNotification.swift */,
+				CF0071911E913128009F4060 /* DynamicComment */,
 				CFF4F9871E22989A009FEB0B /* PlanTable */,
 				CFF4F9921E22989A009FEB0B /* Register */,
 				CFF4F9721E22989A009FEB0B /* FirstTable */,
@@ -1455,8 +1511,9 @@
 				CFF4FB231E22989A009FEB0B /* lvjing_collectionView.swift in Sources */,
 				CFF4FB4A1E22989A009FEB0B /* SendPicLayout.swift in Sources */,
 				CF4FD7931CC66286006B755D /* SQLiteDB.swift in Sources */,
+				CF7FF1461E8E2F2F004245E1 /* SearchNet.swift in Sources */,
+				CF7FF13C1E8DF74B004245E1 /* SearchDetailController.swift in Sources */,
 				CFF4FAED1E22989A009FEB0B /* Second_ScrollView_Protocol.swift in Sources */,
-				CFF3EC561E8D10020000CC49 /* SearchNet.swift in Sources */,
 				CFF4FACC1E22989A009FEB0B /* downDynamic.swift in Sources */,
 				CFF4FB4B1E22989A009FEB0B /* ShowOne.swift in Sources */,
 				CFF4FAD31E22989A009FEB0B /* FirstTableView.swift in Sources */,
@@ -1473,28 +1530,33 @@
 				CFF4FAE71E22989A009FEB0B /* diquPickerView.swift in Sources */,
 				CFF4FAF31E22989A009FEB0B /* C_shexiangController.swift in Sources */,
 				CF81574D1E8A1E3F00099C18 /* InfoViewController.swift in Sources */,
+				CF7FF1381E8DF74B004245E1 /* SearchTableDataViewCell.swift in Sources */,
 				CFF4FAD11E22989A009FEB0B /* FirstTableDetailController.swift in Sources */,
 				CFF4FAFA1E22989A009FEB0B /* Editing_V.swift in Sources */,
+				CF7FF1341E8DF74B004245E1 /* SearchSQL.swift in Sources */,
 				CFF4FB221E22989A009FEB0B /* lijing_Layout.swift in Sources */,
 				CFF4FAE61E22989A009FEB0B /* PlanTableViewCell.swift in Sources */,
 				CFF4FAEA1E22989A009FEB0B /* registerDir.swift in Sources */,
-				CFF3EC591E8D10020000CC49 /* SearchTableViewCell.swift in Sources */,
 				CFF4FAF91E22989A009FEB0B /* Editing_C.swift in Sources */,
 				CFBF26B11E27A76400904F64 /* PlanTableDataView.swift in Sources */,
 				CFF4FAEB1E22989A009FEB0B /* RegisterModel.swift in Sources */,
 				CF6184021E39AAD700927312 /* AlarmPickerView.swift in Sources */,
 				CFF4FB241E22989A009FEB0B /* tiezhi_collectionView.swift in Sources */,
 				CFF4FAF61E22989A009FEB0B /* biaoqian_collectionView.swift in Sources */,
+				CF7FF1371E8DF74B004245E1 /* SearchTableDataView.swift in Sources */,
 				CFF4FAF41E22989A009FEB0B /* ChosePicLayout.swift in Sources */,
 				CFF4FAF81E22989A009FEB0B /* Edit_Image_Data.swift in Sources */,
 				CFF4FAE81E22989A009FEB0B /* Directory.swift in Sources */,
+				CF00719D1E913128009F4060 /* DynamicCommentTableDataMessage.swift in Sources */,
 				CFBF26B01E27A76400904F64 /* PlanTableDataMessage.swift in Sources */,
 				CFF4FB4C1E22989A009FEB0B /* V_shexiangController.swift in Sources */,
 				CF75E27A1E2FB08F00198E5B /* SetAlarm.swift in Sources */,
 				CF19267A1E4D823E00639111 /* planSQL.swift in Sources */,
+				CFCF1B9A1E91F0C7009FFBB2 /* Dynamic_Protocol.swift in Sources */,
 				CFF4FAF51E22989A009FEB0B /* Edit_Image_Layout.swift in Sources */,
 				CFF4FADA1E22989A009FEB0B /* MainViewController_P.swift in Sources */,
 				CFF4FAE31E22989A009FEB0B /* PlanTableDetailController.swift in Sources */,
+				CF7FF1361E8DF74B004245E1 /* SearchTableDataMessage.swift in Sources */,
 				CFF4FAF21E22989A009FEB0B /* setup.swift in Sources */,
 				CFF4FAEF1E22989A009FEB0B /* SecondTableMessageItem.swift in Sources */,
 				CFF4FACA1E22989A009FEB0B /* Clean.swift in Sources */,
@@ -1503,22 +1565,26 @@
 				CFF4FADD1E22989A009FEB0B /* MyNotification.swift in Sources */,
 				CFF4FACE1E22989A009FEB0B /* First_ScrollView_Data.swift in Sources */,
 				CFF4FAE01E22989A009FEB0B /* Plan_ScrollView_Data.swift in Sources */,
+				CF00719A1E913128009F4060 /* DynamicCommentDetailController.swift in Sources */,
+				CF00719E1E913128009F4060 /* DynamicCommentTableDataView.swift in Sources */,
 				CFF4FAD91E22989A009FEB0B /* MainViewController_C.swift in Sources */,
 				CFF4FB251E22989A009FEB0B /* tiezhi_Layout.swift in Sources */,
 				CFF4FADB1E22989A009FEB0B /* MainViewController_M.swift in Sources */,
 				CF4FD7941CC66286006B755D /* SQLTable.swift in Sources */,
+				CF00719B1E913128009F4060 /* DynamicCommentNet.swift in Sources */,
 				CF4FD7951CC66286006B755D /* String-Extras.swift in Sources */,
 				CFF4FAC61E22989A009FEB0B /* AppDelegate.swift in Sources */,
 				CFF4FAE91E22989A009FEB0B /* MySQL.swift in Sources */,
-				CFF3EC581E8D10020000CC49 /* SearchTableView.swift in Sources */,
 				CFF4FB261E22989A009FEB0B /* extensionUIImage.swift in Sources */,
 				CFF4FAD71E22989A009FEB0B /* LoginModel.swift in Sources */,
 				CFEF0D521CC084890067C135 /* ROHUD+MBProgressHUD.swift in Sources */,
+				CF00719F1E913128009F4060 /* DynamicCommentTableDataViewCell.swift in Sources */,
 				CFF4FACB1E22989A009FEB0B /* download.swift in Sources */,
 				CFF4FAE51E22989A009FEB0B /* PlanTableView.swift in Sources */,
 				CFF4FAE21E22989A009FEB0B /* PlanTableDetail_ScrollView.swift in Sources */,
 				CFF4FB491E22989A009FEB0B /* Send.swift in Sources */,
 				CFBF26B41E27A8A400904F64 /* PlanTableData_P.swift in Sources */,
+				CF7FF13A1E8DF74B004245E1 /* SearchTableData_P.swift in Sources */,
 				CFF4FAEC1E22989A009FEB0B /* RegisterViewController.swift in Sources */,
 				CFF4FAD41E22989A009FEB0B /* FirstTableViewCell.swift in Sources */,
 				CFF4FACF1E22989A009FEB0B /* First_ScrollView_Protocol.swift in Sources */,

@@ -169,10 +169,10 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     func textFieldShouldReturn(textField:UITextField) ->Bool
     {
         if (textField == tfName) {
-            tfName.resignFirstResponder()
+            tfPs.becomeFirstResponder()
             return true;
         }else if (textField == tfPs) {
-            tfPs.resignFirstResponder()
+            submit()
             return true;
         }
         return true

@@ -137,6 +137,15 @@ class PlanTableCellDataMessageItem
         }
     }
     
+    //是否修改过需要上传  true 是需要上传
+    func NeedUpload() -> Bool {
+        if(self.row_type & 0b1000000000 > 0)
+        {
+            return true
+        }
+        return false
+    }
+    
     func HasDoubleCol() -> Bool {
         if(self.row_type & 0b000000001 > 0) {return true}
         else {return false}

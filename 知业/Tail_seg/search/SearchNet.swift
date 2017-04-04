@@ -2,12 +2,12 @@ import Foundation
 import Alamofire
 
 class SearchNet:NSObject {
-    static var Model:PlanNet?
+    static var Model:SearchNet?
     static var predicate:dispatch_once_t = 0
-    class func sharedPlan()->PlanNet?{
+    class func sharedSearch()->SearchNet?{
         
         dispatch_once(&predicate) { () -> Void in
-            Model = PlanNet()
+            Model = SearchNet()
         }
         return Model
     }
@@ -15,32 +15,33 @@ class SearchNet:NSObject {
     typealias NetworkBlockInfo = (dataInfo:String)->Void
     typealias NetworkBlock = (dataInfo:String,data:[[String]])->Void
     
-    func DownSearch(personInfo:String,block:NetworkBlock?)
+    func DownSearchPerson(searchInfo:String,block:NetworkBlock?)
     {
         //测试数据  仅仅用于没有表存在本地的情况下，如果本地创建了表是不行的
-        let urlString:String = "http://www.loveinbc.com/zhiye/downSearch.php"
-        let parameters = ["Info":personInfo]
+        let urlString:String = "http://www.loveinbc.com/zhiye/downSearchPerson.php"
+        let parameters = ["info":searchInfo]
+        print("DownSearch")
+        print(parameters)
         
         Alamofire.request(.POST, urlString, parameters: parameters)
             .responseJSON{ response in
-                print("DownSearch数据")
                 switch response.result
                 {
                 case .Success:
-                    print("DownPlan 网络连接正常")
+                    print("DownSearch 网络连接正常")
                     print(response.result.value!)
                     let str = (response.result.value!)as?String
                     
-                    if(str == "已经是最新的")
+                    if(str == "用户不存在")
                     {
-                        print("已经是最新的")
-                        block!(dataInfo:"不更改",data:[[""]])
+                        print("用户不存在")
+                        block!(dataInfo:"用户不存在",data:[[""]])
                     }
                     else if let JSON = response.result.value as? NSArray
                     {
-                        print("有更新数据多少条")
+                        print("有用户数据多少条")
                         print(JSON.count)
-                        print("输出更新的数据")
+                        print("输出用户数据")
                         var infoDataItem = [String]()
                         var infoData=[[String]]()
                         var HasNewPlan:Bool = false
@@ -62,25 +63,13 @@ class SearchNet:NSObject {
                                     infoDataItem.append(String(JSON[i][n]))
                                 }
                             }
-                            
-                            if(SqlReturnInfo == "本地需要更新")
-                            {
-                                infoData.append(infoDataItem)
-                                block!(dataInfo:"要更改",data: infoData)
-                            }
-                            else if(SqlReturnInfo == "本地需要上传")
-                            {
-                                print("本地需要上传")
-                                block!(dataInfo:"要更改",data: infoData)
-                            }
-                            else
-                            {
-                                print("本地不用更新")
-                                block!(dataInfo:"不更改",data: infoData)
-                            }
+                            infoData.append(infoDataItem)
                         }
+                        
+                        SearchManager.shareSearchManager().RefreshFriend(infoData)
+                        block!(dataInfo:"用户存在",data: infoData)
                         print(infoData)
-                        print("以上输出更新的数据")
+                        print("以上输出用户的数据")
                     }
                     break
                 case .Failure:
@@ -96,8 +85,8 @@ class SearchNet:NSObject {
                  监听文件下载进度，此 block 在子线程中执行。
                  */
         }
-        print("Step:5")
     }
+    
     
     //上传plan到服务器
     func UpLoadPlan(planData:[String:String],block:NetworkBlockInfo?)
@@ -221,13 +210,5 @@ class SearchNet:NSObject {
         }
     }
     
-    
-    func downSearchImage(url:String,dynamic_id:String){
-        //按动态id命名图片
-        var userDirForDynamic="/zhiye/user/"+LoginModel.sharedLoginModel()!.returnMyName()+"/dynamic"
-        print("downkaishi ")
-        print(userDirForDynamic)
-        download.shareMyDownload().downImage(url,dir:userDirForDynamic,fileName:dynamic_id,fileType:".jpg")
-    }
 }
 

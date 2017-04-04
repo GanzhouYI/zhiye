@@ -3,15 +3,10 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "FirstTableView.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:FirstTableView.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "indexPath.row">
-            </PersistentString>
-            <PersistentString
-               value = "self.bubbleSection">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "downDynamic.(conNet(String, block : (dataInfo : String, data : [[String]]) -&gt; ()?) -&gt; ()).(closure #1):downDynamic.swift">
+      </ContextState>
+      <ContextState
+         contextName = "FirstTableDetailController.Comment() -&gt; ():FirstTableDetailController.swift">
       </ContextState>
       <ContextState
          contextName = "PlanTableDataView.tableView(UITableView, numberOfRowsInSection : Int) -&gt; Int:PlanTableDataView.swift">
@@ -44,6 +39,17 @@
          contextName = "SetAlarmView.init(frame : CGRect, PlanTableCell : PlanTableDataViewCell, IsLeft : Bool) -&gt; SetAlarmView:SetAlarm.swift">
       </ContextState>
       <ContextState
+         contextName = "DynamicCommentNet.(DownCommentName() -&gt; ()).(closure #2):DynamicCommentNet.swift">
+      </ContextState>
+      <ContextState
+         contextName = "PlanNet.(UpLoadPlanCell(String, tid : String, block : (dataInfo : String) -&gt; ()?) -&gt; ()).(closure #1):planNet.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "parameter">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "MySQL.ReturnPlanCellData(Int, ttid : Int, uid : Int) -&gt; [PlanTableCellDataMessageItem]:planSQL.swift">
       </ContextState>
       <ContextState
@@ -58,10 +64,26 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "DynamicCommentTableDataView.tableView(UITableView, numberOfRowsInSection : Int) -&gt; Int:DynamicCommentTableDataView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "DynamicCommentManager.shareDynamicCommentManager().dataMessageItem">
+            </PersistentString>
+            <PersistentString
+               value = "DynamicCommentManager.shareDynamicCommentManager().ReturnCommentFloor()">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "AlarmPickerView.ReturnPickerViewValue() -&gt; ():AlarmPickerView.swift">
       </ContextState>
       <ContextState
          contextName = "PlanTableView.tableView(UITableView, didSelectRowAtIndexPath : NSIndexPath) -&gt; ():PlanTableView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "indexPath.row">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "SetAlarmView.AlarmData([String]) -&gt; ():SetAlarm.swift">
@@ -102,10 +124,32 @@
          contextName = "PlanTableDataMessage.insertNewPlanCell(String, planTableTTid : String) -&gt; ():PlanTableDataMessage.swift">
       </ContextState>
       <ContextState
+         contextName = "DynamicCommentNet.(DownDynamicComment(String, block : (dataInfo : String, data : [[String]]) -&gt; ()?) -&gt; ()).(closure #1):DynamicCommentNet.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "DynamicCommentManager.shareDynamicCommentManager().dataMessageItem.count">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "DynamicCommentManager.RefreshComment([[String]]) -&gt; ():DynamicCommentTableDataMessage.swift">
+      </ContextState>
+      <ContextState
          contextName = "MainViewController.Plan_Table_DidSelect(Int, bubbleSection : PlanTableMessageItem) -&gt; ():MainViewController_C.swift">
       </ContextState>
       <ContextState
+         contextName = "PlanNet.(UpLoadPlan(String, tid : String, block : (dataInfo : String) -&gt; ()?) -&gt; ()).(closure #1):planNet.swift">
+      </ContextState>
+      <ContextState
          contextName = "MySQL.insertPlanCell([String]) -&gt; ():planSQL.swift">
+      </ContextState>
+      <ContextState
+         contextName = "MySQL.DataFromNet([String]) -&gt; String:planSQL.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "String(MysqlData[0][&quot;status&quot;])">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "MySQL.insertPlanEmptyCell([String]) -&gt; ():planSQL.swift">
@@ -114,10 +158,18 @@
          contextName = "PlanTableDataMessage.InitData(Int, ttid : Int, uid : Int) -&gt; ():PlanTableDataMessage.swift">
       </ContextState>
       <ContextState
-         contextName = "downDynamic.(conNet(String, block : (dataInfo : String, data : [[String]]) -&gt; ()?) -&gt; ()).(closure #1):downDynamic.swift">
+         contextName = "SetAlarmView.InitAlarm() -&gt; ():SetAlarm.swift">
       </ContextState>
       <ContextState
-         contextName = "SetAlarmView.InitAlarm() -&gt; ():SetAlarm.swift">
+         contextName = "FirstTableView.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:FirstTableView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "indexPath.row">
+            </PersistentString>
+            <PersistentString
+               value = "self.bubbleSection">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
    </ContextStates>
 </VariablesViewState>

@@ -48,9 +48,17 @@ class MySQL
         //如果表还不存在则创建表（其中uid为自增主键）
         SQLiteDB.sharedInstance().execute("create table if not exists zhiye_User(uid int primary key,username varchar(30),pwd varchar(50),email varchar(30),phone varchar(20),gender varchar(4),intro text,diqu varchar(40),logo varchar(50))")
         
+        //uid为自己 fuid为关注的好友uid   status 0 是陌生人 1是好友  2是黑名单
+        SQLiteDB.sharedInstance().execute("create table if not exists zhiye_Friend(uid int,fuid int,status int,primary key(uid,fuid))")
+        
         let createStrDynamic = "create table if not exists zhiye_Dynamic(dynamic_id int,uid int,dynamic_image text,dynamic_text text,dynamic_num_people_watch int,dynamic_num_people_praise int,dynamic_date datetime,dynamic_title text,primary key(dynamic_id,uid),foreign key (uid) references zhiye_User(uid) on delete cascade)"
         //如果表还不存在则创建表（其中uid为自增主键）
         SQLiteDB.sharedInstance().execute(createStrDynamic)
+        
+        //动态评论表
+       // let createStrDynamicComment = "create table if not exists zhiye_DynamicComment(dynamic_id int,cuid int,cfloor int,crow int,ctuid int,comment text,comment_time datetime,hasRead int,primary key(dynamic_id,uid,cuid,cfloor,crow,ctuid))"
+        //如果表还不存在则创建表（其中uid为自增主键）
+       // SQLiteDB.sharedInstance().execute(createStrDynamicComment)
         
         //创建时间、最后修改时间、最近的一次闹钟时间（包括在 哪个子表，哪一行的闹钟）
         //status只在本地有，远端没有该字段

@@ -42,6 +42,32 @@ extension MySQL{
         return Item
     }
     
+    //返回表的所有信息上传至服务器
+    func ReturnPlanInfoToServer(tid:String,uid:String = String(LoginModel.sharedLoginModel()!.returnMyUid()))  ->[String] {
+        let sql = "select * from zhiye_Table where uid ="+String(uid)+" and tid="+String(tid)
+        var data = SQLiteDB.sharedInstance().query(sql)
+        print("输出查询tid的Info")
+        print(data)
+        
+        let name = String(data[0]["name"]!)
+        let tip = data[0]["tip"] != nil ? String(data[0]["tip"]!) : ""
+        let status = "0"
+        var create_time = String(data[0]["create_time"]!)
+        create_time=create_time.stringByReplacingOccurrencesOfString(" +0000", withString: "")
+        var last_time = String(data[0]["last_time"]!)
+        last_time=last_time.stringByReplacingOccurrencesOfString(" +0000", withString: "")
+        var alarm_time = data[0]["alarm_time"] != nil ? String(data[0]["alarm_time"]!) : ""
+        alarm_time=alarm_time.stringByReplacingOccurrencesOfString(" +0000", withString: "")
+        let Table_yanjin_Num = String(data[0]["Table_yanjin_Num"]!)
+        let Table_pinglun_Num = String(data[0]["Table_pinglun_Num"]!)
+        let ttid = data[0]["ttid"] != nil ? String(data[0]["ttid"]!) : "-1"
+        let ttid_row = data[0]["ttid_row"] != nil ? String(data[0]["ttid_row"]!) : "-1"
+        
+        //var Item:[String] = ["name":name,"tip":tip,"status":status,"create_time":create_time,"last_time":last_time,"alarm_time":alarm_time,"Table_yanjin_Num":Table_yanjin_Num,"Table_pinglun_Num":Table_pinglun_Num,"ttid":ttid,"ttid_row":ttid_row]
+        var Item:[String] = [name,tip,status,create_time,last_time,alarm_time,Table_yanjin_Num,Table_pinglun_Num,ttid,ttid_row]
+        return Item
+    }
+    
     func ReturnPlanCellData(tid:Int,ttid:Int,uid:Int = LoginModel.sharedLoginModel()!.returnMyUid()) -> Array<PlanTableCellDataMessageItem>{
         
         let sql = "select * from zhiye_TableData where uid ="+String(uid)+" and tid="+String(tid)+" and ttid="+String(ttid)
@@ -356,19 +382,20 @@ extension MySQL{
         9 ttid    10  ttid_row
         11 ttidUpdated   是否更新完成ttid子表，0代表没有，1代表更新完成
      */
-    
+    //    status (0、最新数据   1、需要更新   2、需要上传   3、已删除  4、正在上传   5、正在下载  6、需要下载)
     func DataFromNet(data:[String]) -> String
     {
         let sqlString = "select * from zhiye_Table where uid = "+String(LoginModel.sharedLoginModel()!.returnMyUid())+" and create_time = '" + data[5] + "'"
         let MysqlData = SQLiteDB.sharedInstance().query(sqlString)
         
         //存在这条动态
-        if MysqlData.count > 0
+        if (MysqlData.count > 0 && String(MysqlData[0]["status"]!) != "6")
         {
             //存在这条数据
             print("init zhiye_Table存在")
             print(data[0])
             print(String(MysqlData[0]["tid"]))
+
             //并且tid相同
             if(data[0] == String(MysqlData[0]["tid"]!))
             {
@@ -446,6 +473,59 @@ extension MySQL{
         return "本地不用更新"
     }
     
+    //暂时把本地zhiye_TableData指定的tid uid全部上传
+    //查询plan中需要上传的CellData 同时返回 数据values给服务器 ，uid、tid、ttid、ttid_row 返回上个函数。当服务器返回成功插入时，更新本地的 row_type
+    func UpLoadUpdateCell(uid:String,tid:String) -> String{
+
+        //服务器数据库语句
+        var sqlServer = "insert into zhiye_TableData (uid,tid,ttid,ttid_row,row_type,left_data,left_alarm,left_connect,right_data,right_alarm,right_connect) values"
+        //let sql = "select * from zhiye_TableData where uid="+uid+" and tid = "+tid+" and row_type >= 512 and row_type <= 1023"
+        let sql = "select * from zhiye_TableData where uid="+uid+" and tid = "+tid
+        var data = SQLiteDB.sharedInstance().query(sql)
+        print("输出所有本地需要Upload的planCellData")
+        print(data)
+        if(data.count==0)
+        {
+            return "0"
+        }
+        for i in 0..<data.count
+        {
+            var ttid:String = data[i]["ttid"] != nil ? String(data[i]["ttid"]!) : ""
+            var ttid_row:String = String(data[i]["ttid_row"]) != nil ? String(data[i]["ttid_row"]!) : "0"
+            var row_type:String = data[i]["row_type"] != nil ? String(data[i]["row_type"]!) : ""
+            var left_data:String = data[i]["left_data"] != nil ? String(data[i]["left_data"]!) : ""
+            var left_alarm:String = data[i]["left_alarm"] != nil ? String(data[i]["left_alarm"]!) : ""
+            var left_connect:String = data[i]["left_connect"] != nil ? String(data[i]["left_connect"]!) : ""
+            var right_data:String = data[i]["right_data"] != nil ? String(data[i]["right_data"]!) : ""
+            var right_alarm:String = data[i]["right_alarm"] != nil ? String(data[i]["right_alarm"]!) : ""
+            var right_connect:String = data[i]["right_connect"] != nil ? String(data[i]["right_connect"]!) : ""
+            
+            sqlServer += "("+uid+","
+            sqlServer += tid+","
+            sqlServer += ttid+","
+            sqlServer += ttid_row+","
+            sqlServer += row_type+","
+            sqlServer += "'"+left_data+"'"+","
+            sqlServer += "'"+left_alarm+"'"+","
+            sqlServer += left_connect+","
+            sqlServer += "'"+right_data+"'"+","
+            sqlServer += "'"+right_alarm+"'"+","
+            sqlServer += right_connect+")"
+            
+            if(i == data.count-1)
+            {
+               // sqlServer += ""
+            }
+            else
+            {
+                sqlServer += ","
+            }
+        }
+        print("sqlServer")
+        print(sqlServer)
+        return sqlServer
+    }
+
     
     func searchLocalPlan(uid:Int=LoginModel.sharedLoginModel()!.returnMyUid()) -> [PlanTableMessageItem] {
         var PlanMessage = Array<PlanTableMessageItem>()

@@ -175,7 +175,9 @@ class PlanTableView:UITableView,UITableViewDelegate, UITableViewDataSource
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("shuashuashuashua")
-        if(indexPath.row < self.bubbleSection?.count)
+        print(indexPath.row)
+        print(self.bubbleSection?.count)
+        if(indexPath.row < self.bubbleSection!.count)
         {
             //只有是最新版本或需要上传但不在上传状态才可以点击
             if(self.bubbleSection![indexPath.row].status == 0 || self.bubbleSection![indexPath.row].status == 2)

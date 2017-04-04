@@ -145,7 +145,8 @@ extension  MainViewController{
             break
             //搜索
         case "search":
-            
+            let search = SearchDetailController()
+            self.navigationController?.pushViewController(search, animated: true)
             break
         default:
             break
@@ -328,16 +329,10 @@ extension  MainViewController{
     /*Plan_Table_Delegate*/
     func Plan_Table_DidSelect(index: Int,bubbleSection:PlanTableMessageItem) {
         print("输出",index)
-        if(index<10)
-        {
             let PlanTableCotroller = PlanTableDetailController()
             PlanTableCotroller.bubbleSection = bubbleSection
             self.navigationController?.pushViewController(PlanTableCotroller, animated: true)
-        }
-        else
-        {
-            
-        }
+
     }
     
     func 关注(btn:UIButton)
