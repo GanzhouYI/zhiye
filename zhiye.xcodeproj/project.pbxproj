@@ -138,6 +138,12 @@
 		CFBF26B21E27A76400904F64 /* PlanTableDataViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBF26AF1E27A76400904F64 /* PlanTableDataViewCell.swift */; };
 		CFBF26B41E27A8A400904F64 /* PlanTableData_P.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBF26B31E27A8A400904F64 /* PlanTableData_P.swift */; };
 		CFCF1B9A1E91F0C7009FFBB2 /* Dynamic_Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFCF1B991E91F0C7009FFBB2 /* Dynamic_Protocol.swift */; };
+		CFE3EB961E971A1900375418 /* FriendTableDataMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE3EB8F1E971A1900375418 /* FriendTableDataMessage.swift */; };
+		CFE3EB971E971A1900375418 /* FriendTableDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE3EB901E971A1900375418 /* FriendTableDataView.swift */; };
+		CFE3EB981E971A1900375418 /* FriendTableDataViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE3EB911E971A1900375418 /* FriendTableDataViewCell.swift */; };
+		CFE3EB991E971A1900375418 /* FriendDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE3EB921E971A1900375418 /* FriendDetailController.swift */; };
+		CFE3EB9A1E971A1900375418 /* FriendNet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE3EB931E971A1900375418 /* FriendNet.swift */; };
+		CFE3EB9C1E971A1900375418 /* FriendTableData_P.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE3EB951E971A1900375418 /* FriendTableData_P.swift */; };
 		CFEF0D521CC084890067C135 /* ROHUD+MBProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF0D511CC084890067C135 /* ROHUD+MBProgressHUD.swift */; };
 		CFF4FAC61E22989A009FEB0B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFF4F96A1E22989A009FEB0B /* AppDelegate.swift */; };
 		CFF4FAC71E22989A009FEB0B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CFF4F96B1E22989A009FEB0B /* Assets.xcassets */; };
@@ -449,6 +455,12 @@
 		CFBF26AF1E27A76400904F64 /* PlanTableDataViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlanTableDataViewCell.swift; path = PlanTableData/PlanTableDataViewCell.swift; sourceTree = "<group>"; };
 		CFBF26B31E27A8A400904F64 /* PlanTableData_P.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanTableData_P.swift; sourceTree = "<group>"; };
 		CFCF1B991E91F0C7009FFBB2 /* Dynamic_Protocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dynamic_Protocol.swift; sourceTree = "<group>"; };
+		CFE3EB8F1E971A1900375418 /* FriendTableDataMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendTableDataMessage.swift; sourceTree = "<group>"; };
+		CFE3EB901E971A1900375418 /* FriendTableDataView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendTableDataView.swift; sourceTree = "<group>"; };
+		CFE3EB911E971A1900375418 /* FriendTableDataViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendTableDataViewCell.swift; sourceTree = "<group>"; };
+		CFE3EB921E971A1900375418 /* FriendDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendDetailController.swift; sourceTree = "<group>"; };
+		CFE3EB931E971A1900375418 /* FriendNet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendNet.swift; sourceTree = "<group>"; };
+		CFE3EB951E971A1900375418 /* FriendTableData_P.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendTableData_P.swift; sourceTree = "<group>"; };
 		CFEF0D511CC084890067C135 /* ROHUD+MBProgressHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ROHUD+MBProgressHUD.swift"; sourceTree = "<group>"; };
 		CFEF0D531CC085770067C135 /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		CFF4F96A1E22989A009FEB0B /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -873,6 +885,27 @@
 			name = PlanTableData;
 			sourceTree = "<group>";
 		};
+		CFE3EB8D1E971A1900375418 /* Friend */ = {
+			isa = PBXGroup;
+			children = (
+				CFE3EB8E1E971A1900375418 /* FriendTableData */,
+				CFE3EB921E971A1900375418 /* FriendDetailController.swift */,
+				CFE3EB931E971A1900375418 /* FriendNet.swift */,
+				CFE3EB951E971A1900375418 /* FriendTableData_P.swift */,
+			);
+			path = Friend;
+			sourceTree = "<group>";
+		};
+		CFE3EB8E1E971A1900375418 /* FriendTableData */ = {
+			isa = PBXGroup;
+			children = (
+				CFE3EB8F1E971A1900375418 /* FriendTableDataMessage.swift */,
+				CFE3EB901E971A1900375418 /* FriendTableDataView.swift */,
+				CFE3EB911E971A1900375418 /* FriendTableDataViewCell.swift */,
+			);
+			path = FriendTableData;
+			sourceTree = "<group>";
+		};
 		CFF3EC4A1E8D0FEC0000CC49 /* search */ = {
 			isa = PBXGroup;
 			children = (
@@ -1011,6 +1044,7 @@
 		CFF4F9A11E22989A009FEB0B /* Tail_seg */ = {
 			isa = PBXGroup;
 			children = (
+				CFE3EB8D1E971A1900375418 /* Friend */,
 				CFF3EC4A1E8D0FEC0000CC49 /* search */,
 				CFF4F9A21E22989A009FEB0B /* shexiang */,
 			);
@@ -1509,12 +1543,14 @@
 				CF8C7E6B1E2E597B00C0E3C9 /* FirstTableMessageItem.swift in Sources */,
 				CFF4FADE1E22989A009FEB0B /* planNet.swift in Sources */,
 				CFF4FB231E22989A009FEB0B /* lvjing_collectionView.swift in Sources */,
+				CFE3EB961E971A1900375418 /* FriendTableDataMessage.swift in Sources */,
 				CFF4FB4A1E22989A009FEB0B /* SendPicLayout.swift in Sources */,
 				CF4FD7931CC66286006B755D /* SQLiteDB.swift in Sources */,
 				CF7FF1461E8E2F2F004245E1 /* SearchNet.swift in Sources */,
 				CF7FF13C1E8DF74B004245E1 /* SearchDetailController.swift in Sources */,
 				CFF4FAED1E22989A009FEB0B /* Second_ScrollView_Protocol.swift in Sources */,
 				CFF4FACC1E22989A009FEB0B /* downDynamic.swift in Sources */,
+				CFE3EB9C1E971A1900375418 /* FriendTableData_P.swift in Sources */,
 				CFF4FB4B1E22989A009FEB0B /* ShowOne.swift in Sources */,
 				CFF4FAD31E22989A009FEB0B /* FirstTableView.swift in Sources */,
 				CFF4FAF01E22989A009FEB0B /* SecondTableView.swift in Sources */,
@@ -1525,7 +1561,9 @@
 				CFF4FAD51E22989A009FEB0B /* Message.swift in Sources */,
 				CFF4FAD81E22989A009FEB0B /* LoginViewController.swift in Sources */,
 				CFF4FAE11E22989A009FEB0B /* Plan_ScrollView_Protocol.swift in Sources */,
+				CFE3EB971E971A1900375418 /* FriendTableDataView.swift in Sources */,
 				CFF4FAF11E22989A009FEB0B /* SecondTableViewCell.swift in Sources */,
+				CFE3EB9A1E971A1900375418 /* FriendNet.swift in Sources */,
 				CFF4FADC1E22989A009FEB0B /* MainViewController_V.swift in Sources */,
 				CFF4FAE71E22989A009FEB0B /* diquPickerView.swift in Sources */,
 				CFF4FAF31E22989A009FEB0B /* C_shexiangController.swift in Sources */,
@@ -1564,6 +1602,7 @@
 				CFA1108A1E8A7F7A0062D767 /* contactUsNet.swift in Sources */,
 				CFF4FADD1E22989A009FEB0B /* MyNotification.swift in Sources */,
 				CFF4FACE1E22989A009FEB0B /* First_ScrollView_Data.swift in Sources */,
+				CFE3EB991E971A1900375418 /* FriendDetailController.swift in Sources */,
 				CFF4FAE01E22989A009FEB0B /* Plan_ScrollView_Data.swift in Sources */,
 				CF00719A1E913128009F4060 /* DynamicCommentDetailController.swift in Sources */,
 				CF00719E1E913128009F4060 /* DynamicCommentTableDataView.swift in Sources */,
@@ -1572,6 +1611,7 @@
 				CFF4FADB1E22989A009FEB0B /* MainViewController_M.swift in Sources */,
 				CF4FD7941CC66286006B755D /* SQLTable.swift in Sources */,
 				CF00719B1E913128009F4060 /* DynamicCommentNet.swift in Sources */,
+				CFE3EB981E971A1900375418 /* FriendTableDataViewCell.swift in Sources */,
 				CF4FD7951CC66286006B755D /* String-Extras.swift in Sources */,
 				CFF4FAC61E22989A009FEB0B /* AppDelegate.swift in Sources */,
 				CFF4FAE91E22989A009FEB0B /* MySQL.swift in Sources */,

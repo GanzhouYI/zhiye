@@ -19,7 +19,7 @@ class MainViewController:UIViewController,UIScrollViewDelegate,First_Table_Deleg
     var SecondtableData = [SecondTableMessageItem]()
     var Secondtable:SecondTableView!
     
-    let FirstTableImage = ["beautiful1.png","beautiful2.png","beautiful3.png","beautiful4.png"]
+    let FirstTableImage = ["beautiful1","beautiful2.png","beautiful3.png","beautiful4.png"]
     let FirstTablebiaoqian = ["fanbiaoqian1","fanbiaoqian2","fanbiaoqian3","fanbiaoqian4"]
     let FirstTableTitle = ["中国人民一二三四五六七八九十","中国人民一二三四五六七八九十中国人民","345","abcABC"]
     let FirstTableDetail = ["中国人民一二三四五六七八九十中国人民一二三四五六七八九十中国人民一二三四五六七八九十中国人民一二三四五六七八九十中国人民一二三四五六七八九十中国人民一二三四五六七八九十中国人民一二三四五六七八九十中国人民一二三四五六七八九十中国人民一二三四五六七八九十中国人民一二三四五六七八九十中国人民一二三四五六七八九十","中国人民一二三四五六七八九十中国人民一二三四五六七八九十中国人民一二三四五六七八九十中国人民一二三四五六七八九十中国人民一二三四五六七八九十中国人民一二三四五六七八九十","一二三四五六七八九十","中国人民一二三四五六七八九十"]
@@ -202,7 +202,7 @@ class MainViewController:UIViewController,UIScrollViewDelegate,First_Table_Deleg
         
         tail_seg5 = UIButton(frame: CGRectMake(350*宽比例,self.view.frame.height-20-20*高比例,30*宽比例,30*高比例))
         tail_seg5.setBackgroundImage(tail_image_seg5, forState: UIControlState.Normal)
-        tail_seg5.setTitle("tail_seg5", forState: UIControlState.Normal)
+        tail_seg5.setTitle("friend", forState: UIControlState.Normal)
         tail_seg5.setTitleColor(UIColor.clearColor(), forState: UIControlState.Normal)
         tail_seg5.addTarget(self, action: "tail_segClick:", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(tail_seg5)

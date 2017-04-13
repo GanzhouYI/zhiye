@@ -10,6 +10,7 @@ class DynamicCommentDetailController: UIViewController,UITextViewDelegate,Commen
     var CTname:String = ""
     var CRow:String = ""
     
+    var chooseNewFloor:UIButton!
     var ctnameLabel:UILabel!
     var titleButton:UIButton!
     var tipButton:UIButton!
@@ -61,6 +62,7 @@ class DynamicCommentDetailController: UIViewController,UITextViewDelegate,Commen
         self.ctnameLabel.layer.borderColor = UIColor.whiteColor().CGColor
         self.ctnameLabel.layer.borderWidth = 2
         self.ctnameLabel.layer.cornerRadius = 10
+        self.view.addSubview(chooseNewFloor)
         self.commentTextView.becomeFirstResponder()
     }
     
@@ -84,6 +86,11 @@ class DynamicCommentDetailController: UIViewController,UITextViewDelegate,Commen
         ctnameLabel.backgroundColor = UIColor.clearColor()
         self.view.addSubview(ctnameLabel)
         
+        chooseNewFloor = UIButton(frame: CGRectMake(150,self.view.frame.height-50-30,50,30))
+        chooseNewFloor.setTitle("X", forState: UIControlState.Normal)
+        chooseNewFloor.backgroundColor = UIColor.clearColor()
+        chooseNewFloor.addTarget(self, action: "ChooseNewFloor", forControlEvents: UIControlEvents.TouchUpInside)
+        
         self.commentTextView = UITextView(frame: CGRectMake(0,self.view.frame.height-50,self.view.frame.width-50,50))
         commentTextView.delegate = self
         commentTextView.backgroundColor = UIColor.whiteColor()
@@ -96,6 +103,14 @@ class DynamicCommentDetailController: UIViewController,UITextViewDelegate,Commen
         submitButton.setTitleColor(UIColor(red: 99/255, green: 184/255, blue: 255/255, alpha: 1), forState: UIControlState.Normal)
         self.view.addSubview(submitButton)
 
+    }
+    
+    func ChooseNewFloor() {
+        self.ctnameLabel.text = "新楼回复"
+        self.chooseNewFloor.removeFromSuperview()
+        self.CFloor = String(DynamicCommentManager.shareDynamicCommentManager().ReturnCommentFloor() + 1)
+        self.CTuid = String(LoginModel.sharedLoginModel()!.returnMyUid())
+        self.CRow = "0"
     }
     
     func HiddenComment()
@@ -118,6 +133,7 @@ class DynamicCommentDetailController: UIViewController,UITextViewDelegate,Commen
         self.commentTextView.frame = CGRectMake(0,self.view.frame.height-50-keyBoardHeight,self.view.frame.width-50,50)
         
         self.ctnameLabel.frame.origin = CGPoint(x: CGFloat(0),y: self.view.frame.height-50-30-keyBoardHeight)
+        self.chooseNewFloor.frame.origin = CGPoint(x: CGFloat(150),y: self.view.frame.height-50-30-keyBoardHeight)
         
         self.submitButton.frame = CGRectMake(self.view.frame.width-50,self.view.frame.height-50-keyBoardHeight,50,50)
 
@@ -130,6 +146,7 @@ class DynamicCommentDetailController: UIViewController,UITextViewDelegate,Commen
         self.commentTextView.frame = CGRectMake(0,self.view.frame.height-50,self.view.frame.width-50,50)
         
         self.ctnameLabel.frame.origin = CGPoint(x: CGFloat(0),y: self.view.frame.height-50-30)
+        self.chooseNewFloor.frame.origin = CGPoint(x: CGFloat(150),y: self.view.frame.height-50-30)
         
         self.submitButton.frame=CGRectMake(self.view.frame.width-50,self.view.frame.height-50,50,50)
     }
@@ -154,7 +171,15 @@ class DynamicCommentDetailController: UIViewController,UITextViewDelegate,Commen
                 else if(dataInfo == "评论失败")
                 {
                     self.ctnameLabel.text = "网络不好，请重试"
-                    self.CRow = String(Int(self.CRow)! + 1)
+                    if(self.CRow != "0")
+                    {
+                        self.CRow = String(Int(self.CRow)! + 1)
+                    }
+                    else
+                    {
+                        self.CFloor = String(Int(self.CFloor)! + 1)
+                    }
+                    
                 }
                 else
                 {

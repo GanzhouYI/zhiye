@@ -2,7 +2,7 @@ import UIKit
 class SearchItem
 {
     /*
-     
+     0陌生人 1好友 2黑名单
      */
     var status:Int!
     var uid:Int!

@@ -24,14 +24,13 @@ class InfoViewController: UIViewController,UIScrollViewDelegate,UITextFieldDeleg
     var Picker:diquPickerView!
     var gender = ["男","女"]
     
-    var zhuceData=["username":"",
+    var zhuceData=["uid":String(LoginModel.sharedLoginModel()!.MyUid!),
                    "pwd":"",
                    "email":"",
                    "phone":"",
                    "gender":"",
                    "intro":"",
-                   "diqu":"",
-                   "logo":""]
+                   "diqu":""]
     
     var la_email:UILabel!
     var tf_email:UITextField!
@@ -45,11 +44,12 @@ class InfoViewController: UIViewController,UIScrollViewDelegate,UITextFieldDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RegisterViewController.keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(InfoViewController.keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RegisterViewController.keyboardWillDisappear(_:)), name:UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(InfoViewController.keyboardWillDisappear(_:)), name:UIKeyboardWillHideNotification, object: nil)
         
         //userInfo = MySQL.shareMySQL().searchUserInfo()
+        DataInit()
         
         BG_ScrollView.frame = CGRectMake(0, 20, self.view.frame.width, self.view.frame.height-20)
         BG_ScrollView.contentSize = CGSizeMake(0,800)
@@ -61,7 +61,7 @@ class InfoViewController: UIViewController,UIScrollViewDelegate,UITextFieldDeleg
         self.view.addSubview(BG_ScrollView)
         
         backgroundButton = UIButton(frame:self.view.frame)
-        backgroundButton.addTarget(self,action:#selector(RegisterViewController.returnbackKeyboard),forControlEvents:UIControlEvents.TouchUpInside)
+        backgroundButton.addTarget(self,action:#selector(InfoViewController.returnbackKeyboard),forControlEvents:UIControlEvents.TouchUpInside)
         BG_ScrollView.addSubview(backgroundButton)
         
         let head = UIImageView(frame: CGRectMake(0,20,self.view.frame.width,40))
@@ -71,7 +71,7 @@ class InfoViewController: UIViewController,UIScrollViewDelegate,UITextFieldDeleg
         let back=UIButton(frame: CGRectMake(20,25,50,30))
         back.setTitle("取消", forState: UIControlState.Normal)
         back.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        back.addTarget(self, action: #selector(RegisterViewController.backToLogin)
+        back.addTarget(self, action: #selector(InfoViewController.backToLogin)
             , forControlEvents: UIControlEvents.TouchUpInside)
         self.view.backgroundColor=UIColor.whiteColor()
         self.view.addSubview(back)
@@ -79,7 +79,7 @@ class InfoViewController: UIViewController,UIScrollViewDelegate,UITextFieldDeleg
         let submit=UIButton(frame: CGRectMake(self.view.frame.width-20-50,25,50,30))
         submit.setTitle("完成", forState: UIControlState.Normal)
         submit.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        submit.addTarget(self, action: #selector(RegisterViewController.submit)
+        submit.addTarget(self, action: #selector(InfoViewController.submit)
             , forControlEvents: UIControlEvents.TouchUpInside)
         self.view.backgroundColor=UIColor.whiteColor()
         self.view.addSubview(submit)
@@ -90,7 +90,7 @@ class InfoViewController: UIViewController,UIScrollViewDelegate,UITextFieldDeleg
         bt_tou.layer.masksToBounds = true
         bt_tou.setBackgroundImage(UIImage(named: "衣洛特iOS图标/头像"), forState: UIControlState.Normal)
         bt_tou.contentMode=UIViewContentMode.Center
-        bt_tou.addTarget(self, action: #selector(RegisterViewController.choseTouImage), forControlEvents: UIControlEvents.TouchUpInside)
+        bt_tou.addTarget(self, action: #selector(InfoViewController.choseTouImage), forControlEvents: UIControlEvents.TouchUpInside)
         BG_ScrollView.addSubview(bt_tou)
         
         la_name = UILabel(frame: CGRectMake(20,170,80,40))
@@ -101,9 +101,9 @@ class InfoViewController: UIViewController,UIScrollViewDelegate,UITextFieldDeleg
         BG_ScrollView.addSubview(la_name)
         
         tfName = UITextField(frame: CGRectMake(100,170,self.view.frame.width-120,40))
-        tfName.placeholder="输入用户名长度小于12个字符"//默认显示信息
+        tfName.text = LoginModel.sharedLoginModel()!.returnMyName()
+        tfName.enabled = false
         tfName.returnKeyType=UIReturnKeyType.Next//键盘点击确定发生什么
-        tfName.clearButtonMode=UITextFieldViewMode.WhileEditing//当键盘编辑完时出现 X 可以直接删除全部
         tfName.backgroundColor = UIColor.whiteColor()
         tfName.delegate=self
         BG_ScrollView.addSubview(tfName)
@@ -161,7 +161,7 @@ class InfoViewController: UIViewController,UIScrollViewDelegate,UITextFieldDeleg
         
         segGender = UISegmentedControl(items: gender)
         segGender.frame = CGRectMake(100,360,self.view.frame.width-120,40)
-        segGender.addTarget(self, action: #selector(RegisterViewController.choseGender(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        segGender.addTarget(self, action: #selector(InfoViewController.choseGender(_:)), forControlEvents: UIControlEvents.ValueChanged)
         segGender.selectedSegmentIndex = 0
         segGender.tintColor=UIColor.whiteColor()
         BG_ScrollView.addSubview(segGender)
@@ -173,7 +173,7 @@ class InfoViewController: UIViewController,UIScrollViewDelegate,UITextFieldDeleg
         bt_diqu.titleLabel?.textAlignment = NSTextAlignment.Center
         bt_diqu.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         bt_diqu.titleLabel?.font = UIFont(name: "Zapfino", size: 20)
-        bt_diqu.addTarget(self, action: #selector(RegisterViewController.choseDiqu(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        bt_diqu.addTarget(self, action: #selector(InfoViewController.choseDiqu(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         BG_ScrollView.addSubview(bt_diqu)
         
         la_email = UILabel(frame: CGRectMake(20,480,80,40))
@@ -222,6 +222,12 @@ class InfoViewController: UIViewController,UIScrollViewDelegate,UITextFieldDeleg
         
     }
     
+    func DataInit() {
+        //var data:[String:String] = MySQL.shareMySQL().searchLoginInfo()
+        //print(data)
+        
+    }
+    
     func keyboardWillAppear(notification: NSNotification) {
         
         // 获取键盘信息
@@ -258,51 +264,9 @@ class InfoViewController: UIViewController,UIScrollViewDelegate,UITextFieldDeleg
             BG_ScrollView.frame.origin.y -= HeightDiffer
         }
         
-        nameConfirm()//验证昵称是否符合
         pwdConfirm()//验证密码是否符合
     }
     
-    func nameConfirm()->String
-    {
-        if((tfName.text) != "")
-        {
-            if tfName.text?.characters.count<=12
-            {
-            RegisterModel.sharedRegisterModel()?.registerName(zhuceData
-                , block: { (dataInfo) in
-                    if(dataInfo == "昵称已存在")
-                    {
-                        self.la_name_tip.text = "昵称已存在"
-                        self.la_name_tip.textColor=UIColor.yellowColor()
-                    }
-                    else if(dataInfo == "昵称可用")
-                    {
-                        self.la_name_tip.text = "昵称可用"
-                        self.la_name_tip.textColor=UIColor.greenColor()
-                        self.returnbackKeyboard()
-                    }
-                    else if(dataInfo == "网络连接错误")
-                    {
-                        print("网络连接错误")
-                        self.la_name_tip.text = "网络连接错误"
-                        self.la_name_tip.textColor=UIColor.greenColor()
-                    }
-            })
-                return "昵称格式正确"
-            }
-            else
-            {
-                return "昵称大于12个字符!"
-            }
-        }
-        else
-        {
-            la_name_tip.text = "用户名长度小于12个字符"
-            self.la_name_tip.textColor=UIColor.blackColor()
-            return "还未输入昵称！"
-        }
-        
-    }
     
     func pwdConfirm()->String//
     {
@@ -367,7 +331,6 @@ class InfoViewController: UIViewController,UIScrollViewDelegate,UITextFieldDeleg
     
     func submit()
     {
-        zhuceData["username"]=tfName.text
         zhuceData["pwd"]=tfPs.text
         zhuceData["gender"]=gender[segGender.selectedSegmentIndex]
         zhuceData["email"]=tf_email.text
@@ -382,17 +345,9 @@ class InfoViewController: UIViewController,UIScrollViewDelegate,UITextFieldDeleg
             diqu += diquData[2]
             return diqu
             }()
-                zhuceData["logo"]=""
         let pwdTip = pwdConfirm()
-        let nameTip = nameConfirm()
-        if nameTip != "昵称格式正确"
-        {
-            self.tipAlert = UIAlertController(title: "昵称格式错误", message: nameTip, preferredStyle: UIAlertControllerStyle.Alert)
-            let okAction = UIAlertAction(title: "好的", style: .Default,handler: nil)
-            self.tipAlert.addAction(okAction)
-            self.presentViewController(self.tipAlert, animated: true, completion: nil)
-        }
-        else if pwdTip != "密码格式正确"
+
+        if pwdTip != "密码格式正确"
         {
             self.tipAlert = UIAlertController(title: "密码格式错误", message: pwdTip, preferredStyle: UIAlertControllerStyle.Alert)
             let okAction = UIAlertAction(title: "好的", style: .Default,handler: {action in
@@ -402,36 +357,25 @@ class InfoViewController: UIViewController,UIScrollViewDelegate,UITextFieldDeleg
             self.tipAlert.addAction(okAction)
             self.presentViewController(self.tipAlert, animated: true, completion: nil)
         }
-        else//向服务器注册
+        else//向服务器更新
         {
             
-        RegisterModel.sharedRegisterModel()?.conNet(zhuceData, block: { (dataInfo) in
-            if dataInfo == "昵称已存在"
+        RegisterModel.sharedRegisterModel()?.UpdataUser(zhuceData, block: { (dataInfo) in
+            if dataInfo == "修改失败"
             {
-                print("昵称已存在")
-                self.tipAlert = UIAlertController(title: "昵称已存在", message: "昵称被抢了，换个更帅的名称吧！", preferredStyle: UIAlertControllerStyle.Alert)
-                let okAction = UIAlertAction(title: "好的", style: .Default,handler: {action in
-                    self.la_name_tip.text = "昵称已存在"
-                    self.la_name_tip.textColor=UIColor.yellowColor()
-                })
-                self.tipAlert.addAction(okAction)
-                self.presentViewController(self.tipAlert, animated: true, completion: nil)
-            }
-            else if dataInfo == "注册失败"
-            {
-                print("注册失败")
-                self.tipAlert = UIAlertController(title: "注册失败", message: "抱歉，zhiye正在维护，或联系客服！", preferredStyle: UIAlertControllerStyle.Alert)
+                print("修改失败")
+                self.tipAlert = UIAlertController(title: "修改失败", message: "抱歉，zhiye正在维护，或联系客服！", preferredStyle: UIAlertControllerStyle.Alert)
                 let okAction = UIAlertAction(title: "好的", style: .Default,handler: nil)
                 self.tipAlert.addAction(okAction)
                 self.presentViewController(self.tipAlert, animated: true, completion: nil)
-
             }
-            else if dataInfo == "注册成功"
+            else if dataInfo == "修改成功"
             {
-                print("注册成功")
-                self.tipAlert = UIAlertController(title: "注册成功", message: "进入zhiye体验一番吧！", preferredStyle: UIAlertControllerStyle.Alert)
+                print("修改成功")
+                MySQL.shareMySQL().updateLoginUser(self.zhuceData)
+                self.tipAlert = UIAlertController(title: "修改成功", message: "回到主界面！", preferredStyle: UIAlertControllerStyle.Alert)
                 let okAction = UIAlertAction(title: "好的", style: .Default,handler: {action in
-                self.dismissViewControllerAnimated(true, completion: nil)
+                    self.navigationController?.popViewControllerAnimated(true)
                 })
                 self.tipAlert.addAction(okAction)
                 self.presentViewController(self.tipAlert, animated: true, completion: nil)
@@ -497,8 +441,9 @@ class InfoViewController: UIViewController,UIScrollViewDelegate,UITextFieldDeleg
     
     func backToLogin()
     {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.navigationController?.popViewControllerAnimated(true)
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

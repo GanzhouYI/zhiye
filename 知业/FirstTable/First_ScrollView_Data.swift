@@ -9,6 +9,6 @@
 import Foundation
 
 class First_ScrollView_Data{
-    var imageArray :[String!] = ["衣洛特iOS图标/beautiful1.png","衣洛特iOS图标/beautiful2.png","衣洛特iOS图标/beautiful3.png","衣洛特iOS图标/beautiful4.png"]
-    var First_Scroll_Title :[String!] = ["beautiful1.png","iOS图标/beautiful2.png","衣洛特iOS图标/beautiful3.png","衣洛特iOS图标/beautiful4.png"]
+    var imageArray :[String!] = ["beautiful1.png","beautiful2.png","beautiful3.png","beautiful4.png"]
+    var First_Scroll_Title :[String!] = ["beautiful1.png","beautiful2.png","beautiful3.png","beautiful4.png"]
 }

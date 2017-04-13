@@ -148,6 +148,10 @@ extension  MainViewController{
             let search = SearchDetailController()
             self.navigationController?.pushViewController(search, animated: true)
             break
+        case "friend":
+            let friend = FriendDetailController()
+            self.navigationController?.pushViewController(friend, animated: true)
+            break
         default:
             break
         }
@@ -161,7 +165,12 @@ extension  MainViewController{
         self.view.addSubview(begin)
     }
     
-    func touClick()
+    func touClick() {
+        var infoController = InfoViewController()
+        self.navigationController?.pushViewController(infoController, animated: true)
+    }
+    
+    /*func touClick()
     {
         tou_BcakGround = UIImageView(frame: CGRectMake(0, 0,200,self.view.frame.height))
         tou_BcakGround.backgroundColor=UIColor.whiteColor()
@@ -242,7 +251,7 @@ extension  MainViewController{
         self.tou.removeFromSuperview()
         self.view.addSubview(蒙图)
         
-    }
+    }*/
     
     func show_tou()
     {

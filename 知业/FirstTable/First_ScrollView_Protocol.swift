@@ -1,12 +1,3 @@
-//
-//  First_ScrollView.swift
-//  衣洛特
-//
-//  Created by __________V|R__________ on 16/1/22.
-//  Copyright © 2016年 __________V|R__________. All rights reserved.
-//
-
-
 import Foundation
 import UIKit
 

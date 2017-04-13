@@ -129,6 +129,21 @@ class MySQL
         return user
     }
     
+    func searchLoginInfo(uid:String = String(LoginModel.sharedLoginModel()!.MyUid!))->Dictionary<String,String>
+    {
+        let sqlString = "select * from zhiye_User" //where uid ='"+uid+"'"
+        var data = SQLiteDB.sharedInstance().query(sqlString)
+        var user:[String:String] = ["uid":uid,"pwd":"123123","email":"","phone":"","gender":"","intro":"","diqu":""]
+        if data.count > 0 {
+            //获取最后一行数据显示
+            print(data)
+            user = data[data.count - 1] as! [String:String]
+        }
+        print("searchUserInfo")
+        print(user)
+        return user
+    }
+    
     func updateUser(username:String,user:[String:AnyObject]){
         print("updateUser")
         let sql = "update zhiye_User set uid = '\(user["uid"]!)',username = '\(user["username"]!)',pwd = '\(user["pwd"]!)',email = '\(user["email"]!)',phone = '\(user["phone"]!)',gender = '\(user["gender"]!)',intro = '\(user["intro"]!)',diqu = '\(user["diqu"]!)',logo = '\(user["logo"]!)' where username = '\(username)'"
@@ -136,7 +151,15 @@ class MySQL
         let result = SQLiteDB.sharedInstance().execute(sql)
         print(result)
 }
-        
+    
+    func updateLoginUser(user:[String:String]){
+        print("updateUser")
+        let sql = "update zhiye_User set pwd = '\(user["pwd"]!)',email = '\(user["email"]!)',phone = '\(user["phone"]!)',gender = '\(user["gender"]!)',intro = '\(user["intro"]!)',diqu = '\(user["diqu"]!)' where uid = '\(String(LoginModel.sharedLoginModel()!.MyUid))'"
+        //通过封装的方法执行sql
+        let result = SQLiteDB.sharedInstance().execute(sql)
+        print(result)
+    }
+    
     func deleteUser(username:String){
         let sql = "delete from zhiye_User where username = '\(username)'"
         //通过封装的方法执行sql

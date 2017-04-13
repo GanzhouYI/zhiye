@@ -67,6 +67,43 @@ class RegisterModel:NSObject {
         }
     }
     
+    func UpdataUser(zhuceData:[String:String],block:NetworkBlock?)
+    {
+        let urlString:String = "http://www.loveinbc.com/zhiye/update_user.php"
+        print(zhuceData)
+        Alamofire.request(.POST, urlString, parameters: zhuceData)
+            .responseJSON{ response in
+                print("数据")
+                let str = (response.result.value)as?String
+                print(str)
+                print(response.result.value)
+                print("数据end")
+                switch response.result
+                {
+                case .Success:
+                    print("UpdataUser")
+                    print(response.result.value!)
+                    
+                    if(str == "修改成功")
+                    {
+                        print("修改成功")
+                        block!(dataInfo:"修改成功")
+                    }
+                    else if(str == "修改失败")
+                    {
+                        print("修改失败")
+                        block!(dataInfo:"修改失败")
+                    }
+                    break
+                case .Failure:
+                    print("网络连接错误")
+                    //model.info = ["uid":-2,"username":"网络错误","pwd":"error"]
+                    block!(dataInfo:"网络连接错误")
+                    break
+                }
+        }
+    }
+
     
     func registerName(zhuceData:[String:String],block:NetworkBlock?)
     {

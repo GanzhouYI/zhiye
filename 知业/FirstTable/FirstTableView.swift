@@ -5,8 +5,8 @@ First_ScrollView_Protocol{
     //用于保存所有消息
     var bubbleSection:Array<FirstTableMessageItem>!
     //数据源，用于与 ViewController 交换数据
-    var imageArray :[String!] = ["衣洛特iOS图标/beautiful1.png","衣洛特iOS图标/beautiful2.png","衣洛特iOS图标/beautiful3.png","衣洛特iOS图标/beautiful4.png"]
-    var First_Scroll_Title :[String!] = ["beautiful1.png","iOS图标/beautiful2.png","衣洛特iOS图标/beautiful3.png","衣洛特iOS图标/beautiful4.png"]
+    var imageArray :[String!] = ["beautiful1.png","beautiful2.png","beautiful3.png","beautiful4.png"]
+    var First_Scroll_Title :[String!] = ["beautiful1.png","beautiful2.png","beautiful3.png","beautiful4.png"]
     weak var didSelectDelegate : First_Table_Delegate?
     //下拉刷新
     var refreshControl = UIRefreshControl()
